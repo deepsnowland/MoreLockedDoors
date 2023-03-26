@@ -14,6 +14,7 @@ using Random = System.Random;
 using Il2CppNodeCanvas.Tasks.Actions;
 using LoadScene = Il2Cpp.LoadScene;
 using MoreLockedDoors.Utils;
+using GearSpawner;
 
 namespace MoreLockedDoors
 {
@@ -34,7 +35,7 @@ namespace MoreLockedDoors
                 AddCoastalHighwayLocks(lockManager);
                 AddCinderHillsCoalMineLocks(lockManager);
                 AddPleasantValleyLocks(lockManager);
-             
+
             }
         }
 
@@ -141,7 +142,7 @@ namespace MoreLockedDoors
                 lockManager.InitializeLock(hiberniaBackDoor, 60, lockManager.metalDoorLockedAudio, "61299ab5-b6ac-420a-bbdc-4e4787c7b461", Utils.Items.prybar.GetComponent<GearItem>());
 
             }
-            else if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingWarehouseA")
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingWarehouseA")
             {
 
                 //Lock interior Hibernia doors
@@ -152,7 +153,7 @@ namespace MoreLockedDoors
                 lockManager.InitializeLock(hiberniaBackDoor, 60, lockManager.metalDoorLockedAudio, "ed87b39e-addb-457a-8abf-81d7bfa4a97e", Utils.Items.prybar.GetComponent<GearItem>());
 
             }
-            else if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingMine")
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingMine")
             {
 
                 //Lock Mine 5 interior doors
@@ -264,7 +265,7 @@ namespace MoreLockedDoors
                 GameObject signalHillDoor = GameObject.Find(Paths.signalHillDoor);
                 lockManager.InitializeLock(signalHillDoor, 100, lockManager.metalDoorLockedAudio, "", Utils.Items.prybar.GetComponent<GearItem>());
             }
-            else if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RuralStoreA")
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RuralStoreA")
             {
 
                 //Lock Rural store interior
@@ -277,7 +278,7 @@ namespace MoreLockedDoors
             }
         }
 
-       
+
 
         //These patches fix issues with the generic Lock component
         [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.Update))]
@@ -314,7 +315,6 @@ namespace MoreLockedDoors
             }
 
         }
-
 
     }
 }

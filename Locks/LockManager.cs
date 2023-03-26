@@ -33,7 +33,6 @@ namespace MoreLockedDoors.Locks
                 } */
 
                 targetObj.AddComponent<Lock>();
-                MelonLogger.Msg("Added component");
                 Lock addedLock = targetObj.GetComponent<Lock>();
 
                 addedLock.m_ChanceLocked = lockChance;

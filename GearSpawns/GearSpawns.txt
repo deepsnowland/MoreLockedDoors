@@ -1,0 +1,6 @@
+﻿#Mystery Lake
+
+tag=MoreLockedDoors_RandomUnlockItems
+scene=LakeRegion
+item=GEAR_BoltCutters p=1647.3655,35.5040,1287.4664 r=0.8331,144.4321,2.7035 c=100
+item=GEAR_BoltCutters p=1642.1162,35.8947,1287.6565 r=4.4670,7.3443,359.1048 c=100
