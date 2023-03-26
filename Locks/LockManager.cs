@@ -66,39 +66,6 @@ namespace MoreLockedDoors.Locks
         }
 
         //not currently used
-        public bool InitializeCustomLock(GameObject targetObj, int lockChance, string audio, string companionGUID, GearItem tool)
-        {
-
-            if (targetObj == null)
-            {
-                MelonLogger.Msg("Object is null");
-                return false;
-            }
-            else
-            {
-
-                targetObj.AddComponent<CustomLock>();
-                MelonLogger.Msg("Added custom lock component");
-                CustomLock addedLock = targetObj.GetComponent<CustomLock>();
-
-                addedLock.m_ChanceLocked = lockChance;
-
-                if (tool != null)
-                {
-                    addedLock.m_GearPrefabToForceLock = tool;
-                }
-                else
-                {
-                    MelonLogger.Msg("Tool is null!");
-                }
-
-                addedLock.m_LockedAudio = audio;
-                addedLock.m_ModeFilter = GameModeFilter.Sandbox;
-
-                addedLock.m_CompanionLockGuid = companionGUID;
-                return true;
-            }
-        }
         public bool RemoveLocks(GameObject targetObj)
         {
 
@@ -125,7 +92,6 @@ namespace MoreLockedDoors.Locks
                 return true;
             }
         }
-
         //not currently used
         public void SetupHoverIconsOverride(Lock lck, GameObject obj)
         {
