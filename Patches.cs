@@ -35,7 +35,7 @@ namespace MoreLockedDoors
                 AddCoastalHighwayLocks(lockManager);
                 AddCinderHillsCoalMineLocks(lockManager);
                 AddPleasantValleyLocks(lockManager);
-
+                AddBlackrockLocks(lockManager);
             }
         }
 
@@ -277,11 +277,23 @@ namespace MoreLockedDoors
 
             }
         }
+        public static void AddBlackrockLocks(LockManager lockManager)
+        {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BlackrockRegion")
+            {
+                GameObject substationDoor = GameObject.Find(Utils.Paths.huntingLodgeGate);
+                lockManager.InitializeLock(substationDoor, 60, lockManager.metalDoorLockedAudio, "f4bc3103-7108-4d80-9b0d-2e83864983c7", Utils.Items.prybar.GetComponent<GearItem>());
+            }
+            else if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RadioControlHutC")
+            {
+                GameObject substationDoor = GameObject.Find(Utils.Paths.substationDoorInt);
+                lockManager.InitializeLock(substationDoor, 60, lockManager.metalDoorLockedAudio, "a0fb16ec-8fb0-48e1-aa38-8e4760b24410", Utils.Items.prybar.GetComponent<GearItem>());
+            }
+        }
 
 
-
-        //These patches fix issues with the generic Lock component
-        [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.Update))]
+            //These patches fix issues with the generic Lock component
+            [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.Update))]
 
         internal class LoadScene_Update
         {

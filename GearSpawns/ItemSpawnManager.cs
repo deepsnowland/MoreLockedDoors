@@ -33,7 +33,7 @@ namespace MoreLockedDoors.GearSpawns
         }
         public static void InitializeCustomHandler()
         {
-            SpawnTagManager.AddHandler("MoreLockedDoors_RandomUnlockItems", new OneGuaranteedItemSpawnHandler());
+            SpawnTagManager.AddHandler("morelockeddoors_randomunlockitems", new OneGuaranteedItemSpawnHandler());
         }
     }
 }

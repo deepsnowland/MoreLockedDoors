@@ -13,7 +13,7 @@ namespace MoreLockedDoors.GearSpawns
 
         bool spawnedItem = false;
         int determinedItems = 0;
-        const int TotalSpawnPoints = 2; //temporary value for testing
+        int TotalSpawnPoints = 1;
 
         private void Reset()
         {
@@ -32,6 +32,8 @@ namespace MoreLockedDoors.GearSpawns
 
             MelonLogger.Msg("Determining if item should spawn: {0}", spawnedItem);
 
+            GetTotalNumOfItems(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
             if (spawnedItem) return false;
             else if (determinedItems == TotalSpawnPoints - 1)
             {
@@ -45,6 +47,29 @@ namespace MoreLockedDoors.GearSpawns
                 MelonLogger.Msg("Item should spawn: {0}", spawnedItem);
                 determinedItems++;
                 return spawnedItem;
+            }
+        }
+
+        private void GetTotalNumOfItems(string scene)
+        {
+            switch (scene)
+            {
+                case "LakeRegion": TotalSpawnPoints = 3;
+                    break;
+                case "RuralRegion": TotalSpawnPoints = 2;
+                    break;
+                case "TracksRegion": TotalSpawnPoints = 4;
+                    break;
+                case "MarshRegion": TotalSpawnPoints = 2;
+                    break;
+                case "CoastalRegion": TotalSpawnPoints = 3;
+                    break;
+                case "WhalingStationRegion": TotalSpawnPoints = 5;
+                    break;
+                case "WhalingWarehouseA": TotalSpawnPoints = 2;
+                    break;
+                default: TotalSpawnPoints = 1;
+                    break;
             }
         }
 

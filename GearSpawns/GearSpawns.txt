@@ -1,6 +1,54 @@
-﻿#Mystery Lake
+﻿#Singular spawn locations with chance
+scene=Dam
+item=GEAR_BoltCutters p=7.7782,1.1992,-10.4658 r=0.0000,180.6731,0.0000 c=30
+scene=DamRiverTransitionZoneB
+item=GEAR_BoltCutters p=504.0244,89.4779,264.3570 r=0.0000,81.3511,75.0000 c=40
 
-tag=MoreLockedDoors_RandomUnlockItems
+tag=morelockeddoors_randomunlockitems
+
+#Mystery Lake
+
 scene=LakeRegion
 item=GEAR_BoltCutters p=1647.3655,35.5040,1287.4664 r=0.8331,144.4321,2.7035 c=100
-item=GEAR_BoltCutters p=1642.1162,35.8947,1287.6565 r=4.4670,7.3443,359.1048 c=100
+item=GEAR_BoltCutters p=1631.1387,38.2559,1271.4733 r=0.8331,297.0377,2.7035 c=100
+item=GEAR_BoltCutters p=920.3998,21.7581,1246.3171 r=8.6277,267.3414,78.1523 c=100
+
+#Pleasant Valley
+
+scene=RuralRegion
+item=GEAR_BoltCutters p=1910.9955,200.8922,645.7029 r=50.3083,269.2589,94.7239 c=100
+item=GEAR_BoltCutters p=2649.7876,198.5691,2767.1028 r=9.4130,351.6968,5.9473 c=100
+
+@Broken Railroad
+
+scene=TracksRegion
+item=GEAR_BoltCutters p=529.1318,200.6574,547.7302 r=355.4361,225.7442,343.2997 c=100
+item=GEAR_BoltCutters p=578.5941,198.9500,561.9451 r=0.0000,255.6129,0.0000 c=100
+item=GEAR_BoltCutters p=578.7036,200.1492,557.8105 r=0.0000,273.1425,0.0000 c=100
+item=GEAR_BoltCutters p=639.6695,201.6525,529.2717 r=7.5578,5.3764,5.7110 c=100
+
+@Muskeg
+
+scene=MarshRegion
+item=GEAR_BoltCutters p=700.4304,-18.6498,1487.8354 r=0.0000,298.4512,11.4827 c=100
+item=GEAR_BoltCutters p=104.9728,-91.8847,234.5324 r=358.2108,119.3103,1.7901 c=100
+
+@Coastal Highway
+
+scene=CoastalRegion
+item=GEAR_BoltCutters p=780.9253,25.0597,652.7479 r=2.1969,224.4280,6.6075 c=100
+item=GEAR_BoltCutters p=759.5016,24.8520,652.7831 r=0.7325,69.1952,6.6074 c=100
+item=GEAR_BoltCutters p=-36.3983,176.5451,1342.2605 r=358.5255,282.9753,74.2626 c=100
+
+@Desolation Point
+
+scene=WhalingStationRegion
+item=GEAR_BoltCutters p=1002.8336,20.0256,1326.6067 r=0.0000,251.9457,0.0000 c=100
+item=GEAR_BoltCutters p=1035.3098,20.0270,1228.4561 r=358.9129,2.0972,355.5964 c=100
+item=GEAR_BoltCutters p=1038.4146,30.0671,1001.9105 r=15.7230,263.8550,13.6811 c=100
+item=GEAR_BoltCutters p=1012.9391,19.1746,996.5551 r=283.4238,70.5392,9.3337 c=100
+item=GEAR_BoltCutters p=254.5074,51.0155,1153.3481 r=-0.0000,6.8907,2.6839 c=100
+
+scene=WhalingWarehouseA
+item=GEAR_BoltCutters p=-9.6146,1.7285,-10.1141 r=0.0002,271.6455,90.0001 c=5
+item=GEAR_BoltCutters p=-9.1395,0.3805,5.9961 r=0.0000,261.2948,0.0000 c=5

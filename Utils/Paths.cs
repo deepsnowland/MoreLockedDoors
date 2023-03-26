@@ -62,6 +62,13 @@ namespace MoreLockedDoors.Utils
         //a358f1a0-1af4-4faa-9f00-0b77fa1ff114
         public const string mine5door2Interior = "Design/Transitions/Mine2Entrance/TransitionContact";
 
+        //Blackrock
+
+        //f4bc3103-7108-4d80-9b0d-2e83864983c7
+        public const string substationDoor = "Design/Scripting/Transitions/SubStation/InteriorLoadTrigger";
+        //a0fb16ec-8fb0-48e1-aa38-8e4760b24410
+        public const string substationDoorInt = "Root/Design/Scripting/RadioControlHutInteriorExit";
+
         public static string[] paths = {bankFrontDoor, damFrontGate, huntingLodgeGate, maintenanceShedDoorA, maintenanceShedDoorB, maintenanceShedDoorC, maintenanceShedDoorAInterior, maintenanceShedDoorBInterior, maintenanceShedDoorCInterior, quonsetGasStationExteriorDoors, cinderHillsCoalMineExteriorDoor, cinderHillsCoalMineInteriorDoorCH, signalHillDoor, hiberniaBackDoor, hiberniaBackDoorInt, hiberniaFrontDoor, hiberniaFrontDoorInt, mine5door1Interior, mine5door2Interior };
 
         public static string GetObjectPath(GameObject obj)
