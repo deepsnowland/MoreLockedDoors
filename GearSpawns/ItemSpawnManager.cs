@@ -25,9 +25,6 @@ namespace MoreLockedDoors.GearSpawns
                 data = reader.ReadToEnd();
             }
 
-
-            MelonLogger.Msg("Gear Spawn data: {0}", data);
-
             SpawnManager.ParseSpawnInformation(data);
 
         }
