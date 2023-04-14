@@ -27,20 +27,20 @@ item=GEAR_BoltCutters p=578.5941,198.9500,561.9451 r=0.0000,255.6129,0.0000 c=10
 item=GEAR_BoltCutters p=578.7036,200.1492,557.8105 r=0.0000,273.1425,0.0000 c=100
 item=GEAR_BoltCutters p=639.6695,201.6525,529.2717 r=7.5578,5.3764,5.7110 c=100
 
-@Muskeg
+#Muskeg
 
 scene=MarshRegion
 item=GEAR_BoltCutters p=700.4304,-18.6498,1487.8354 r=0.0000,298.4512,11.4827 c=100
 item=GEAR_BoltCutters p=104.9728,-91.8847,234.5324 r=358.2108,119.3103,1.7901 c=100
 
-@Coastal Highway
+#Coastal Highway
 
 scene=CoastalRegion
 item=GEAR_BoltCutters p=780.9253,25.0597,652.7479 r=2.1969,224.4280,6.6075 c=100
 item=GEAR_BoltCutters p=759.5016,24.8520,652.7831 r=0.7325,69.1952,6.6074 c=100
 item=GEAR_BoltCutters p=-36.3983,176.5451,1342.2605 r=358.5255,282.9753,74.2626 c=100
 
-@Desolation Point
+#Desolation Point
 
 scene=WhalingStationRegion
 item=GEAR_BoltCutters p=1002.8336,20.0256,1326.6067 r=0.0000,251.9457,0.0000 c=100

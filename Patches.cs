@@ -292,14 +292,27 @@ namespace MoreLockedDoors
         }
 
 
-            //These patches fix issues with the generic Lock component
-            [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.Update))]
+        //These patches fix issues with the generic Lock component
+        [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.Update))]
 
         internal class LoadScene_Update
         {
             private static void Postfix(LoadScene __instance)
             {
-                Lock lck = __instance.Lock;
+                Lock lck = null;
+
+                GameObject obj = __instance.gameObject;
+                string[] paths = Utils.Paths.paths;
+
+                if (paths.Any(Utils.Paths.GetObjectPath(obj).Contains))
+                {
+                    lck = __instance.Lock;
+                }
+                else
+                {
+                    return;
+                }
+
                 lck.MaybeUnlockDueToCompanionBeingUnlocked();
             }
         }
