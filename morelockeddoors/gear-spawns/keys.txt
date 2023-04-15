@@ -1,0 +1,31 @@
+#Singular spawn locations with chance
+
+tag=morelockeddoors_randomkeys
+
+#Mystery Lake
+
+scene=LakeRegion
+
+#Pleasant Valley
+
+scene=RuralRegion
+
+item=GEAR_MoreLockedDoors_PV_CommunityHallKey p=2333.3386,53.1412,2256.8779 r=11.5284,306.9797,348.2310 c=100
+item=GEAR_MoreLockedDoors_PV_CommunityHallKey p=1688.4067,43.1087,1852.5682 r=1.1580,302.4941,345.9629 c=100
+item=GEAR_MoreLockedDoors_PV_CommunityHallKey p=2318.6799,42.4091,2327.4343 r=9.9361,249.2704,347.1819 c=100
+
+#Coastal Highway
+
+scene=CoastalRegion
+item=GEAR_MoreLockedDoors_CH_FishingCabinKey p=-569.0166,24.9489,674.1484 r=0.0000,262.7127,0.0000 c=100
+item=GEAR_MoreLockedDoors_CH_FishingCabinKey p=-689.9501,23.3298,403.7062 r=-0.0000,166.9616,-0.0000 c=100
+item=GEAR_MoreLockedDoors_CH_FishingCabinKey p=-655.9482,23.2085,638.7220 r=4.3700,329.6350,352.5946 c=100
+item=GEAR_MoreLockedDoors_CH_FishingCabinKey p=-1190.1178,103.0424,802.7569 r=6.0481,3.1541,356.0278 c=100
+
+tag=morelockeddoors_farmhousekey
+
+scene=RuralRegion
+item=GEAR_MoreLockedDoors_PV_FarmKey p=1438.4897,48.4288,1046.6401 r=1.1872,336.3431,354.0528 c=100
+item=GEAR_MoreLockedDoors_PV_FarmKey p=1704.8829,50.1184,928.6653 r=-0.0000,78.5391,-0.0000 c=100
+item=GEAR_MoreLockedDoors_PV_FarmKey p=1726.9261,49.6886,922.1537 r=1.1936,74.3012,0.0000 c=100
+item=GEAR_MoreLockedDoors_PV_FarmKey p=1943.9143,45.6597,1250.4089 r=14.0343,298.4456,1.1936 c=100

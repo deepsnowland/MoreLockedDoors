@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: MoreLockedDoors
+  m_EditorClassIdentifier: 
+  m_GroupName: MoreLockedDoors
+  m_Data:
+    m_SerializedData: []
+  m_GUID: bd02439695cd62d42be61995344cc5d4
+  m_SerializeEntries:
+  - m_GUID: 7abc349af085cac43bf91cdcfd4a26d2
+    m_Address: GEAR_MoreLockedDoors_PV_FarmKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 013383e58470fcc49a38a8276369a71b
+    m_Address: GEAR_MoreLockedDoors_PV_CommunityHallKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: caa62b566ffd4c54daef2f56e5e185d8
+    m_Address: GEAR_MoreLockedDoors_ML_CampOfficeKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 74aea5098b102e744949e95f4be739b4
+    m_Address: GEAR_MoreLockedDoors_CH_FishingCabinKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: aaf7850233a6da24784cff0237102236
+    m_Address: GEAR_MoreLockedDoors_AC_AnglersDenKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8cc7260ee091c9646a639d8f4f3c9aff
+    m_Address: ico_GearItem__MoreLockedDoors_AC_AnglersDenKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2250bd015914e5e44a792f3e8fbef18a
+    m_Address: ico_GearItem__MoreLockedDoors_CH_FishingCabinKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 51906d151aba5074fb0c2caad5a739aa
+    m_Address: ico_GearItem__MoreLockedDoors_ML_CampOfficeKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1c84dd45aa13788468f7f3ee79955d91
+    m_Address: ico_GearItem__MoreLockedDoors_PV_CommunityHallKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c4d08a5aaa6eacd47b5a6f0b09f3dba8
+    m_Address: ico_GearItem__MoreLockedDoors_PV_FarmKey 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 54bf1587163f76a49ba78d64d7eb5b38, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 110444c728a16384f9976781f39ce3d8, type: 2}

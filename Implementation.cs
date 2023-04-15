@@ -14,7 +14,6 @@ internal sealed class Implementation : MelonMod
 	{
 		MelonLogger.Msg("More Locked Doors is online.");
 		ItemSpawnManager.InitializeCustomHandler();
-		ItemSpawnManager.InitializeItemSpawns();
 	}
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 using Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,16 +12,15 @@ using HarmonyLib;
 using Il2Cpp;
 using MoreLockedDoors.Locks;
 using Random = System.Random;
-using Il2CppNodeCanvas.Tasks.Actions;
 using LoadScene = Il2Cpp.LoadScene;
 using MoreLockedDoors.Utils;
-using GearSpawner;
+using Object = System.Object;
 
 namespace MoreLockedDoors
 {
     internal class Patches : MelonMod
     {
-        [HarmonyPatch(typeof(GameManager), nameof(GameManager.Awake))]
+        [HarmonyPatch(typeof(QualitySettingsManager), nameof(QualitySettingsManager.ApplyCurrentQualitySettings))]
 
         internal class GameManager_Awake
         {
@@ -234,6 +234,68 @@ namespace MoreLockedDoors
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "InteriorLoadTrigger");
 
+                //Lock Farmhouse exterior
+
+                //9769a1de-8021-4585-9648-bc439aa334fd
+                GameObject farmhouseDoor1 = null;
+                //57607823-0142-409a-aa92-893f35dc5b8a
+                GameObject farmhouseDoor2 = null;
+                //40b60936-4e53-4b76-b127-43ffd123fcb0
+                GameObject farmhouseDoor3 = null;
+                //ee96b557-caa7-4d96-89d3-79ebc406b8b5
+                GameObject farmhouseCellarDoor = null;
+
+                foreach (var obj in objects)
+                {
+                    if (obj.GetComponent<ObjectGuid>().PDID == "9769a1de-8021-4585-9648-bc439aa334fd")
+                    {
+                        farmhouseDoor1 = obj;
+                    }
+                    else if (obj.GetComponent<ObjectGuid>().PDID == "57607823-0142-409a-aa92-893f35dc5b8a")
+                    {
+                        farmhouseDoor2 = obj;
+                    }
+                    else if (obj.GetComponent<ObjectGuid>().PDID == "40b60936-4e53-4b76-b127-43ffd123fcb0")
+                    {
+                        farmhouseDoor3 = obj;
+                    }
+                    else if (obj.GetComponent<ObjectGuid>().PDID == "ee96b557-caa7-4d96-89d3-79ebc406b8b5")
+                    {
+                        farmhouseCellarDoor = obj;
+                    }
+                }
+
+                if(farmhouseDoor1 != null && farmhouseDoor2 != null && farmhouseDoor3 != null && farmhouseCellarDoor != null)
+                {
+                    lockManager.InitializeLock(farmhouseDoor1, 80, lockManager.woodDoorLockedAudio, "fb7c5b5d-e88d-489e-a1c2-ccbdc76e5da2", Items.farmKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(farmhouseDoor2, 80, lockManager.woodDoorLockedAudio, "0b9a4999-4125-4c11-bb13-d48ed81546c9", Items.farmKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(farmhouseDoor3, 80, lockManager.woodDoorLockedAudio, "2edd5f53-8533-4780-b0dd-eeec30a744d5", Items.farmKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(farmhouseCellarDoor, 80, lockManager.metalDoorLockedAudio, "e62f85fd-edc9-4aaf-ae59-7b893b06abe9", Items.prybar.GetComponent<GearItem>());
+                }
+
+                //Lock Community Hall exterior
+
+                GameObject communityHallFrontDoor = null;
+                GameObject communityHallBackDoor = null;
+
+                foreach (var obj in objects)
+                {
+                    if (obj.GetComponent<ObjectGuid>().PDID == "a30c0c66-7117-4359-bcad-f7b75ea1ccaf")
+                    {
+                        communityHallFrontDoor = obj;
+                    }
+                    else if (obj.GetComponent<ObjectGuid>().PDID == "87d6326a-f32b-4e87-968e-39b48d9e1a3f")
+                    {
+                        communityHallBackDoor = obj;
+                    }
+                }
+
+                if(communityHallFrontDoor != null && communityHallBackDoor != null)
+                {
+                    lockManager.InitializeLock(communityHallFrontDoor, 70, lockManager.woodDoorLockedAudio, "2d1702f8-5626-444f-b36e-f9542899d606", Items.communityHallKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(communityHallBackDoor, 70, lockManager.woodDoorLockedAudio, "7fa2c843-3a37-497f-bb16-3083be100f96", Items.communityHallKey.GetComponent<GearItem>());
+                }
+
                 //Lock Rural Store exterior
 
                 GameObject ruralStoreFrontDoor = null;
@@ -276,6 +338,62 @@ namespace MoreLockedDoors
                 lockManager.InitializeLock(ruralStoreBackDoor, 70, lockManager.woodDoorLockedAudio, "30ce35d1-f08b-43e4-abdd-c8f226352afc", Utils.Items.prybar.GetComponent<GearItem>());
 
             }
+            else if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CommunityHallA")
+            {
+
+                GameObject communityHallFrontDoorInt = GameObject.Find(Utils.Paths.communityHallFrontDoorInt);
+                GameObject communityHallBackDoorInt = GameObject.Find(Utils.Paths.communityHallBackDoorInt);
+
+                lockManager.InitializeLock(communityHallFrontDoorInt, 70, lockManager.woodDoorLockedAudio, "a30c0c66-7117-4359-bcad-f7b75ea1ccaf", Utils.Items.communityHallKey.GetComponent<GearItem>());
+                lockManager.InitializeLock(communityHallBackDoorInt, 70, lockManager.woodDoorLockedAudio, "87d6326a-f32b-4e87-968e-39b48d9e1a3f", Utils.Items.communityHallKey.GetComponent<GearItem>());
+            }
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmhouseA")
+            {
+
+                var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "ExteriorLoadTrigger");
+
+                GameObject farmhouseBasementDoorInt = GameObject.Find(Paths.farmhouseBasementDoorHouse);
+
+                GameObject farmhouseDoorInt1 = null;
+                GameObject farmhouseDoorInt2 = null;
+                GameObject farmhouseDoorInt3 = null;
+
+
+                foreach (var obj in objects)
+                {
+                    if (obj.GetComponent<ObjectGuid>().PDID == "fb7c5b5d-e88d-489e-a1c2-ccbdc76e5da2")
+                    {
+                        farmhouseDoorInt1 = obj;
+                    }
+                    else if (obj.GetComponent<ObjectGuid>().PDID == "0b9a4999-4125-4c11-bb13-d48ed81546c9")
+                    {
+                        farmhouseDoorInt2 = obj;
+                    }
+                    else if (obj.GetComponent<ObjectGuid>().PDID == "2edd5f53-8533-4780-b0dd-eeec30a744d5")
+                    {
+                        farmhouseDoorInt3 = obj;
+                    }
+                }
+
+                if(farmhouseDoorInt1 != null && farmhouseDoorInt2 != null && farmhouseDoorInt3 != null && farmhouseBasementDoorInt != null)
+                {
+                    lockManager.InitializeLock(farmhouseDoorInt1, 80, lockManager.woodDoorLockedAudio, "9769a1de-8021-4585-9648-bc439aa334fd", Items.farmKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(farmhouseDoorInt2, 80, lockManager.woodDoorLockedAudio, "57607823-0142-409a-aa92-893f35dc5b8a", Items.farmKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(farmhouseDoorInt3, 80, lockManager.woodDoorLockedAudio, "40b60936-4e53-4b76-b127-43ffd123fcb0", Items.farmKey.GetComponent<GearItem>());
+                    lockManager.InitializeLock(farmhouseBasementDoorInt, 70, lockManager.woodDoorLockedAudio, "c42cd462-fa07-4ccb-9bea-e611224260ee", Items.farmKey.GetComponent<GearItem>());
+                } 
+
+            }
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmhouseABasement")
+            {
+
+                GameObject basementDoorBasement = GameObject.Find(Utils.Paths.farmhouseBasementDoorBasement);
+                GameObject farmhouseCellarDoorInt = GameObject.Find(Utils.Paths.farmhouseCellarDoorInt);
+
+                lockManager.InitializeLock(basementDoorBasement, 70, lockManager.woodDoorLockedAudio, "396c8857-9d29-4c6d-aa7b-ba7e839c6cec", Items.farmKey.GetComponent<GearItem>());
+                lockManager.InitializeLock(farmhouseCellarDoorInt, 80, lockManager.metalDoorLockedAudio, "ee96b557-caa7-4d96-89d3-79ebc406b8b5", Items.prybar.GetComponent<GearItem>());
+
+            }
         }
         public static void AddBlackrockLocks(LockManager lockManager)
         {
@@ -302,9 +420,11 @@ namespace MoreLockedDoors
                 Lock lck = null;
 
                 GameObject obj = __instance.gameObject;
-                string[] paths = Utils.Paths.paths;
+                Object paths = new Paths();
 
-                if (paths.Any(Utils.Paths.GetObjectPath(obj).Contains))
+                var list = TypeDescriptor.GetProperties(paths.GetType()).Cast<PropertyDescriptor>().Select(x => x.GetValue(paths)).ToArray();
+
+                if (list.Contains(Paths.GetObjectPath(obj)))
                 {
                     lck = __instance.Lock;
                 }

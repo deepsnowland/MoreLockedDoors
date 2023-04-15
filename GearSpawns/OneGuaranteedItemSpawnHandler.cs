@@ -1,4 +1,5 @@
 ﻿using GearSpawner;
+using Il2Cpp;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,14 @@ namespace MoreLockedDoors.GearSpawns
         public override bool ShouldSpawn(DifficultyLevel difficultyLevel, FirearmAvailability firearmAvailability, GearSpawnInfo gearSpawnInfo)
         {
 
-            GetTotalNumOfItems(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            if (gearSpawnInfo.PrefabName.Contains("BoltCutters"))
+            {
+                GetTotalNumOfCutters(GameManager.m_ActiveScene);
+            }
+            else
+            {
+                GetTotalNumOfKeys(GameManager.m_ActiveScene, gearSpawnInfo);
+            }
 
 
             if (spawnedItem) return false;
@@ -46,7 +54,7 @@ namespace MoreLockedDoors.GearSpawns
             }
         }
 
-        private void GetTotalNumOfItems(string scene)
+        private void GetTotalNumOfCutters(string scene)
         {
             switch (scene)
             {
@@ -67,6 +75,32 @@ namespace MoreLockedDoors.GearSpawns
                 default: TotalSpawnPoints = 1;
                     break;
             }
+        }
+
+        private void GetTotalNumOfKeys(string scene, GearSpawnInfo gsi)
+        {
+            switch (scene)
+            {
+                case "LakeRegion":
+                    TotalSpawnPoints = 3;
+                    break;
+                case "RuralRegion":
+                    TotalSpawnPoints = CheckForMultipleKeysPerRegion(gsi);
+                    break;
+                case "CoastalRegion":
+                    TotalSpawnPoints = 4;
+                    break;
+                default:
+                    TotalSpawnPoints = 1;
+                    break;
+            }
+        }
+
+        private int CheckForMultipleKeysPerRegion(GearSpawnInfo gsi)
+        {
+
+            if (gsi.PrefabName == "GEAR_MoreLockedDoors_PV_FarmKey") return 4;
+            else return 3;
         }
 
     }

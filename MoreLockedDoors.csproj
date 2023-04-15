@@ -17,13 +17,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Utils\GearSpawns.txt" />
+	  <Compile Remove="Unity\**" />
+	  <EmbeddedResource Remove="Unity\**" />
+	  <None Remove="Unity\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="GearSpawns\GearSpawns.txt" />
+	  <None Remove="Utils\GearSpawns.txt" />
 	</ItemGroup>
-	
+
+
 	<!--This is the of packages that the mod references.-->
 	<ItemGroup>
 		<!--This package contains almost everything a person could possibly need to reference while modding.-->
