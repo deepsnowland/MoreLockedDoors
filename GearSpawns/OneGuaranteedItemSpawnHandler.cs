@@ -48,7 +48,7 @@ namespace MoreLockedDoors.GearSpawns
             }
             else
             {
-                spawnedItem = RollChance((1f + determinedItems) / TotalSpawnPoints);
+                spawnedItem = RollChance(((1f + determinedItems) / TotalSpawnPoints) * 100);
                 determinedItems++;
                 return spawnedItem;
             }
@@ -82,13 +82,16 @@ namespace MoreLockedDoors.GearSpawns
             switch (scene)
             {
                 case "LakeRegion":
-                    TotalSpawnPoints = 3;
+                    TotalSpawnPoints = 5;
                     break;
                 case "RuralRegion":
                     TotalSpawnPoints = CheckForMultipleKeysPerRegion(gsi);
                     break;
                 case "CoastalRegion":
                     TotalSpawnPoints = 4;
+                    break;
+                case "AshCanyonRegion":
+                    TotalSpawnPoints = 3;
                     break;
                 default:
                     TotalSpawnPoints = 1;
@@ -98,7 +101,6 @@ namespace MoreLockedDoors.GearSpawns
 
         private int CheckForMultipleKeysPerRegion(GearSpawnInfo gsi)
         {
-
             if (gsi.PrefabName == "GEAR_MoreLockedDoors_PV_FarmKey") return 4;
             else return 3;
         }

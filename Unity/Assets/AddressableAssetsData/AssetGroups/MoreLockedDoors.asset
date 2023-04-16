@@ -33,10 +33,6 @@ MonoBehaviour:
     m_Address: GEAR_MoreLockedDoors_CH_FishingCabinKey
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: aaf7850233a6da24784cff0237102236
-    m_Address: GEAR_MoreLockedDoors_AC_AnglersDenKey
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 8cc7260ee091c9646a639d8f4f3c9aff
     m_Address: ico_GearItem__MoreLockedDoors_AC_AnglersDenKey
     m_ReadOnly: 0

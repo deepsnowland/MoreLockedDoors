@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Il2Cpp;
-
+using MoreLockedDoors.Utils;
 
 namespace MoreLockedDoors.Locks
 {
@@ -15,7 +15,10 @@ namespace MoreLockedDoors.Locks
         public string woodDoorLockedAudio = "Play_SndMechDoorWoodLocked01";
         public string metalChainDoorLockedAudio = "Play_SndMechDoorChainLocked01";
         public string metalDoorLockedAudio = "Play_SndMechDoorMetalLocked01";
-        public bool InitializeLock(GameObject targetObj, int lockChance, string audio, string companionGUID, GearItem tool)
+
+        SaveDataManager sdm = Implementation.sdm;
+
+        public bool InitializeLock(GameObject targetObj, int lockChance, string audio, string companionGUID, string lockName, string companionLockName, GearItem tool)
         {
 
             if(targetObj == null)
@@ -35,6 +38,8 @@ namespace MoreLockedDoors.Locks
                 targetObj.AddComponent<Lock>();
                 Lock addedLock = targetObj.GetComponent<Lock>();
 
+                addedLock.tag = lockName;
+
                 addedLock.m_ChanceLocked = lockChance;
 
                 if (tool != null)
@@ -49,18 +54,108 @@ namespace MoreLockedDoors.Locks
                 addedLock.m_LockedAudio = audio;
                 addedLock.m_ModeFilter = GameModeFilter.Sandbox;
 
-                addedLock.m_CompanionLockGuid = companionGUID;
+                //addedLock.m_CompanionLockGuid = companionGUID;
 
                 addedLock.m_ObjectGuid = targetObj.GetComponent<ObjectGuid>();
 
-                addedLock.m_LockStateRolled = false;
-                addedLock.RollLockedState();
+                string? lockState = sdm.LoadLockData(lockName);
+                string? companionLockState = null;
+
+                if (companionLockName != "" || companionLockName != null)
+                {
+                    companionLockState = sdm.LoadLockData(companionLockName);
+                }
+
+                if (lockState == null)
+                {
+
+                    MelonLogger.Msg("Lock {0} has never been initialized before!", lockName);
+
+                    addedLock.m_LockStateRolled = false;
+
+                    if (companionLockState == null)
+                    {
+
+                        MelonLogger.Msg("Lock {0} has no companion lock or companion lock has not been initialized!", lockName);
+
+                        addedLock.RollLockedState();
+                        if (addedLock.m_LockState == LockState.Locked) sdm.Save("Locked", lockName);
+                        else sdm.Save("Unlocked", lockName);
+                    }
+                    else
+                    {
+
+                        MelonLogger.Msg("Lock {0} has never been initialized, but has companion lock. Setting to match companion lock values.", lockName);
+
+                        addedLock.m_LockStateRolled = true;
+
+                        if (companionLockState == "Locked")
+                        {
+                            addedLock.m_LockState = LockState.Locked;
+                            sdm.Save("Locked", lockName);
+                        }
+                        else if (companionLockState == "Unlocked")
+                        {
+                            addedLock.m_LockState = LockState.Unlocked;
+                            sdm.Save("Unlocked", lockName);
+                        }
+                        else if (companionLockState == "Broken")
+                        {
+                            addedLock.m_LockState = LockState.Broken;
+                            sdm.Save("Broken", lockName);
+                        }
+                    }
+                }
+                else
+                {
+                    addedLock.m_LockStateRolled = true;
+
+                    MelonLogger.Msg("Lock {0} has been initialized before.", lockName);
+
+                    if(companionLockState == null)
+                    {
+
+                        MelonLogger.Msg("Lock {0} has been initialized before but has no companion lock", lockName);
+
+                        if (lockState == "Locked") addedLock.m_LockState = LockState.Locked;
+                        else if (lockState == "Unlocked") addedLock.m_LockState = LockState.Unlocked;
+                        else if (lockState == "Broken") addedLock.m_LockState = LockState.Broken;
+                    }
+                    else
+                    {
+
+                        MelonLogger.Msg("Lock {0} has been initialized but has companion lock. Updating to match companion values", lockName);
+
+                        if (companionLockState == "Locked")
+                        {
+                            addedLock.m_LockState = LockState.Locked;
+                            sdm.Save("Locked", lockName);
+                        }
+                        else if (companionLockState == "Unlocked")
+                        {
+                            addedLock.m_LockState = LockState.Unlocked;
+                            sdm.Save("Unlocked", lockName);
+                        }
+                        else if (companionLockState == "Broken")
+                        {
+                            addedLock.m_LockState = LockState.Broken;
+                            sdm.Save("Broken", lockName);
+                        }
+                    }
+                }
+
+                
                 addedLock.m_AttemptedToOpen = false;
                 addedLock.MaybeGetHoverIconsToShow();
               //SetupHoverIconsOverride(addedLock, targetObj);
                 addedLock.AssignBindingOverrides();
 
-                addedLock.MaybeUnlockDueToCompanionBeingUnlocked();
+
+                if (targetObj.GetComponent<LoadScene>())
+                {
+                    targetObj.GetComponent<LoadScene>().Lock = addedLock;
+                }
+
                 return true;
             }
         }

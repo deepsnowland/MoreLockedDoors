@@ -18,6 +18,9 @@ namespace MoreLockedDoors.Utils
         //Custom items
         public static GameObject farmKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_FarmKey").WaitForCompletion();
         public static GameObject communityHallKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_CommunityHallKey").WaitForCompletion();
+        public static GameObject campOfficeKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_ML_CampOfficeKey").WaitForCompletion();
+        public static GameObject anglersDenKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_AC_AnglersDenKey").WaitForCompletion();
+        public static GameObject fishingCabinKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_CH_FishingCabinKey").WaitForCompletion();
 
     }
 }

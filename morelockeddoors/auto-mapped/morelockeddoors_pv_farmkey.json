@@ -1,0 +1,27 @@
+{
+    "ModCollectibleComponent": {
+                                "DisplayNameLocalizationId" : "FUAR_MoreLockedDoors_PV_FarmKeyTitle",
+                                "DescriptionLocalizatonId" : "FUAR_MoreLockedDoors_PV_FarmKeyDescription",
+                                "InventoryActionLocalizationId" : "",
+                                "WeightKG": 0,
+                                "DaysToDecay" : 0,
+                                "MaxHP" : 100,
+                                "InitialCondition" : "Perfect",
+                                "InventoryCategory" : "Auto",
+                                "PickUpAudio" : "Play_SndInvBullet",
+                                "PutBackAudio" : "Play_SndInvBullet",
+                                "StowAudio" : "Play_InventoryStow",
+                                "WornOutAudio" : "",
+                                "InspectOnPickup" : true,
+                                "InspectDistance" : 0.4,
+                                "InspectAngles" : [0, 0, 0],
+                                "InspectOffset" : [0, 0, 0],
+                                "InspectScale" :  [1, 1, 1],
+                                "NormalModel" : "",
+                                "InspectModel" : "",
+
+                                "HudMessageLocalizationId" : "",
+                                "NarrativeTextLocalizationId" : "FUAR_MoreLockedDoors_PV_FarmKeyDescription",
+                                "TextAlignment" : "Left"
+                            }
+}

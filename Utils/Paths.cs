@@ -17,6 +17,13 @@ namespace MoreLockedDoors.Utils
         public const string damFrontDoor = "Art/Structures/STRSPAWN_DamA_Prefab/Tech/InteriorLoadTrigger";
         public const string damFrontGate = "Art/DamObjectGroup/DamFenceGate-intact/OBJ_fenceSecurityChainGateA_Prefab/Hinge/OBJ_fenceSecurityChainGateB_Prefab";
 
+        public const string campOfficeExteriorDoors = "Art/Structures/STRSPAWN_CampOffice_Prefab/Tech/InteriorLoadTrigger";
+
+        //1b38bf5f-fcf1-4414-85a5-2287a083561c
+        public const string campOfficeFrontDoorInt = "Root/Design/Interactive/INTERACTIVE_CampOfficeInteriorDoorFront_Prefab";
+        //7ae0e7e1-c485-488e-86e5-3cc35c5a8f6b
+        public const string campOfficeBackDoorInt = "Root/Design/Interactive/INTERACTIVE_CampOfficeInteriorDoorBack_Prefab";
+
         //Broken Railroad
 
         public const string huntingLodgeGate = "Art/Structures/MainenanceYard/gate_area/fences/LodgeGate/OBJ_fenceSecurityChainGateA_Prefab (1)/Hinge/OBJ_fenceSecurityChainGateB_Prefab";
@@ -29,7 +36,7 @@ namespace MoreLockedDoors.Utils
 
         //Coastal Highway
 
-        //public const string quonsetGasStationExteriorDoors = "Art/Structure_Group/STRSPAWN_QuonsetGasStation_Prefab/Tech/InteriorLoadTrigger";
+        public const string quonsetGasStationExteriorDoors = "Art/Structure_Group/STRSPAWN_QuonsetGasStation_Prefab/Tech/InteriorLoadTrigger";
         public const string quonsetGasStationInteriorFrontDoor = "Root/Design/Scripting/FrontDoorInteriorExit";
         public const string quonsetGasStationInteriorBackDoor = "Root/Design/Scripting/BackDoorInteriorExit";
         public const string cinderHillsCoalMineExteriorDoor = "Design/Scripting/Transitions/Mine/TransitionContact";
@@ -41,18 +48,21 @@ namespace MoreLockedDoors.Utils
 
         public const string signalHillDoor = "Art/Structures_Group/RadioTowerArea/STRSPAWN_RadioControlHut_Prefab/Tech/InteriorLoadTrigger";
 
+        public const string ruralStoreExteriorDoors = "Art/Structures_Group/Town/STRSPAWN_ThompsonStoreA_Prefab/InteriorLoadTrigger";
+
         //c17a1359-75ee-43fa-ace4-b76819fdaa9b
         public const string ruralStoreFrontDoorInt = "Root/Design/Scripting/FrontDoorInteriorExit";
         //138894f7-7fd0-4c97-be36-1f350cb93499
         public const string ruralStoreBackDoorInt = "Root/Design/Scripting/BackDoorInteriorExit";
 
-      //public const string communityHallExteriorDoors = "Art/STR_CommunityHallA_Exterior_Prefab (1)/Tech";
+        public const string communityHallExteriorDoors = "Art/STR_CommunityHallA_Exterior_Prefab (1)/Tech/InteriorLoadTrigger";
 
         //2d1702f8-5626-444f-b36e-f9542899d606
         public const string communityHallFrontDoorInt = "Root/Design/Scripting/FrontDoorInteriorExit";
         //7fa2c843-3a37-497f-bb16-3083be100f96
         public const string communityHallBackDoorInt = "Root/Design/Scripting/BackDoorInteriorExit";
 
+        public const string farmhouseExteriorDoors = "Art/Structures_Group/SouthFarmLands/FarmHouse/STRSPAWN_FarmHouseA_Prefab/Tech/InteriorLoadTrigger";
         //396c8857-9d29-4c6d-aa7b-ba7e839c6cec
         public const string farmhouseBasementDoorHouse = "Root/Design/Scripting/BasementLoadTrigger";
         //c42cd462-fa07-4ccb-9bea-e611224260ee
@@ -83,7 +93,12 @@ namespace MoreLockedDoors.Utils
         //a0fb16ec-8fb0-48e1-aa38-8e4760b24410
         public const string substationDoorInt = "Root/Design/Scripting/RadioControlHutInteriorExit";
 
-        public static string[] paths = {bankFrontDoor, damFrontGate, huntingLodgeGate, maintenanceShedDoorA, maintenanceShedDoorB, maintenanceShedDoorC, maintenanceShedDoorAInterior, maintenanceShedDoorBInterior, maintenanceShedDoorCInterior, cinderHillsCoalMineExteriorDoor, cinderHillsCoalMineInteriorDoorCH, signalHillDoor, hiberniaBackDoor, hiberniaBackDoorInt, hiberniaFrontDoor, hiberniaFrontDoorInt, mine5door1Interior, mine5door2Interior, };
+        //Ash Canyon
+
+        //c76eb6c3-60ab-46f6-8a06-5dd151b79a9a
+        public const string anglersDenDoorExt = "Greybox/structures/STRSPAWN_LakeCabinF_Prefab/Tech/InteriorLoadTrigger";
+
+        public static string[] paths = {bankFrontDoor, damFrontGate, campOfficeExteriorDoors, campOfficeFrontDoorInt, campOfficeBackDoorInt, huntingLodgeGate, maintenanceShedDoorA, maintenanceShedDoorB, maintenanceShedDoorC, maintenanceShedDoorAInterior, maintenanceShedDoorBInterior, maintenanceShedDoorCInterior, cinderHillsCoalMineExteriorDoor, cinderHillsCoalMineInteriorDoorCH, quonsetGasStationExteriorDoors, quonsetGasStationInteriorFrontDoor, quonsetGasStationInteriorBackDoor, signalHillDoor, ruralStoreExteriorDoors, ruralStoreBackDoorInt, ruralStoreFrontDoorInt, communityHallExteriorDoors, communityHallBackDoorInt, communityHallFrontDoorInt, farmhouseExteriorDoors, farmhouseCellarDoorInt, farmhouseBasementDoorHouse, farmhouseBasementDoorBasement, substationDoor, substationDoorInt, hiberniaBackDoor, hiberniaBackDoorInt, hiberniaFrontDoor, hiberniaFrontDoorInt, mine5door1Interior, mine5door2Interior, anglersDenDoorExt};
 
         public static string GetObjectPath(GameObject obj)
         {

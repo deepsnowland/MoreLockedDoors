@@ -1,0 +1,32 @@
+{
+    "FUAR_MoreLockedDoors_PV_FarmKeyTitle":{
+        "English": "Pleasant Valley Farmhouse Key"
+    },
+    "FUAR_MoreLockedDoors_PV_FarmKeyDescription":{
+        "English": "A key to the Pleasant Valley Farmhouse"
+    },
+    "FUAR_MoreLockedDoors_PV_CommunityHallKeyTitle":{
+        "English": "Thompson's Crossing Community Hall Key"
+    },
+    "FUAR_MoreLockedDoors_PV_CommunityHallKeyDescription":{
+        "English": "A key to the Community Hall in Thompson's Crossing" 
+    },
+    "FUAR_MoreLockedDoors_ML_CampOfficeKeyTitle":{
+        "English": "Mystery Lake Camp Office Key"
+    },
+    "FUAR_MoreLockedDoors_ML_CampOfficeKeyDescription":{
+        "English": "A key to the Mystery Lake camp office"
+    },
+    "FUAR_MoreLockedDoors_CH_FishingCabinKeyTitle":{
+        "English": "Fishing Cabin Key"
+    },
+    "FUAR_MoreLockedDoors_CH_FishingCabinKeyDescription":{
+        "English": "A key to one of the fishing cabins around the coastal highway"
+    },
+    "FUAR_MoreLockedDoors_AC_AnglersDenKeyTitle":{
+        "English": "Angler's Cabin Key"
+    },
+    "FUAR_MoreLockedDoors_AC_AnglersDenKeyDescription":{
+        "English": "A key left behind to the Angler's Den"
+    }
+}
