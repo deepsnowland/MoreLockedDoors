@@ -28,17 +28,18 @@ namespace MoreLockedDoors.Locks
             }
             else
             {
-                
+
                 /*if (targetObj.GetComponent<Lock>())
                 {
                     MelonLogger.Msg("Object already has component. No need to add or modify.");
                     return true;
                 } */
 
+                targetObj.tag = lockName;
+
                 targetObj.AddComponent<Lock>();
                 Lock addedLock = targetObj.GetComponent<Lock>();
 
-                addedLock.tag = lockName;
 
                 addedLock.m_ChanceLocked = lockChance;
 
@@ -54,7 +55,7 @@ namespace MoreLockedDoors.Locks
                 addedLock.m_LockedAudio = audio;
                 addedLock.m_ModeFilter = GameModeFilter.Sandbox;
 
-                //addedLock.m_CompanionLockGuid = companionGUID;
+                addedLock.m_CompanionLockGuid = lockName;
 
                 addedLock.m_ObjectGuid = targetObj.GetComponent<ObjectGuid>();
 
@@ -69,14 +70,14 @@ namespace MoreLockedDoors.Locks
                 if (lockState == null)
                 {
 
-                    MelonLogger.Msg("Lock {0} has never been initialized before!", lockName);
+                    //MelonLogger.Msg("Lock has never been initialized yet.");
 
                     addedLock.m_LockStateRolled = false;
 
                     if (companionLockState == null)
                     {
 
-                        MelonLogger.Msg("Lock {0} has no companion lock or companion lock has not been initialized!", lockName);
+                        //MelonLogger.Msg("Lock has no companion lock data.");
 
                         addedLock.RollLockedState();
                         if (addedLock.m_LockState == LockState.Locked) sdm.Save("Locked", lockName);
@@ -85,7 +86,7 @@ namespace MoreLockedDoors.Locks
                     else
                     {
 
-                        MelonLogger.Msg("Lock {0} has never been initialized, but has companion lock. Setting to match companion lock values.", lockName);
+                        //MelonLogger.Msg("Lock {0} has companion lock data. Saving {1}", lockName, companionLockState);
 
                         addedLock.m_LockStateRolled = true;
 
@@ -108,14 +109,16 @@ namespace MoreLockedDoors.Locks
                 }
                 else
                 {
-                    addedLock.m_LockStateRolled = true;
 
-                    MelonLogger.Msg("Lock {0} has been initialized before.", lockName);
+                    //MelonLogger.Msg("Lock {0} has been initialized before.", lockName);
+
+                    addedLock.m_LockStateRolled = true;
 
                     if(companionLockState == null)
                     {
 
-                        MelonLogger.Msg("Lock {0} has been initialized before but has no companion lock", lockName);
+                        //MelonLogger.Msg("Lock {0} has no companion data.", lockName);
+
 
                         if (lockState == "Locked") addedLock.m_LockState = LockState.Locked;
                         else if (lockState == "Unlocked") addedLock.m_LockState = LockState.Unlocked;
@@ -124,7 +127,7 @@ namespace MoreLockedDoors.Locks
                     else
                     {
 
-                        MelonLogger.Msg("Lock {0} has been initialized but has companion lock. Updating to match companion values", lockName);
+                       //MelonLogger.Msg("Lock {0} has companion lock data. Saving {1}", lockName, companionLockState);
 
                         if (companionLockState == "Locked")
                         {
@@ -147,7 +150,6 @@ namespace MoreLockedDoors.Locks
                 
                 addedLock.m_AttemptedToOpen = false;
                 addedLock.MaybeGetHoverIconsToShow();
-              //SetupHoverIconsOverride(addedLock, targetObj);
                 addedLock.AssignBindingOverrides();
 
 

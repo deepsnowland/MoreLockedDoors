@@ -37,6 +37,9 @@ namespace MoreLockedDoors
                 AddPleasantValleyLocks(lockManager);
                 AddBlackrockLocks(lockManager);
                 AddAshCanyonLocks(lockManager);
+
+                AddForceItemLockComponents();
+
             }
         }
 
@@ -367,7 +370,7 @@ namespace MoreLockedDoors
                 
                 //Lock Radio Control Hut
                 GameObject signalHillDoor = GameObject.Find(Paths.signalHillDoor);
-                lockManager.InitializeLock(signalHillDoor, 100, lockManager.metalDoorLockedAudio, "", "SignalHillDoorExt", "", Utils.Items.prybar.GetComponent<GearItem>());
+                lockManager.InitializeLock(signalHillDoor, 80, lockManager.metalDoorLockedAudio, "", "SignalHillDoorExt", "", Utils.Items.prybar.GetComponent<GearItem>());
             }
             else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RuralStoreA")
             {
@@ -389,17 +392,23 @@ namespace MoreLockedDoors
                 lockManager.InitializeLock(communityHallFrontDoorInt, 70, lockManager.woodDoorLockedAudio, "a30c0c66-7117-4359-bcad-f7b75ea1ccaf", "CommunityHallFrontDoorInt", "CommunityHallFrontDoorExt", Utils.Items.communityHallKey.GetComponent<GearItem>());
                 lockManager.InitializeLock(communityHallBackDoorInt, 70, lockManager.woodDoorLockedAudio, "87d6326a-f32b-4e87-968e-39b48d9e1a3f",  "CommunityHallBackDoorInt", "CommunityHallBackDoorExt", Utils.Items.communityHallKey.GetComponent<GearItem>());
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmhouseA")
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmHouseA")
             {
+
+                MelonLogger.Msg("Inside Farmhouse");
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "ExteriorLoadTrigger");
 
+                MelonLogger.Msg("Inside Farmhouse after finding objects");
+
                 GameObject farmhouseBasementDoorInt = GameObject.Find(Paths.farmhouseBasementDoorHouse);
+
+                MelonLogger.Msg("Inside Farmhouse after finding basement door objects");
+
 
                 GameObject farmhouseDoorInt1 = null;
                 GameObject farmhouseDoorInt2 = null;
                 GameObject farmhouseDoorInt3 = null;
-
 
                 foreach (var obj in objects)
                 {
@@ -417,13 +426,20 @@ namespace MoreLockedDoors
                     }
                 }
 
-                if(farmhouseDoorInt1 != null && farmhouseDoorInt2 != null && farmhouseDoorInt3 != null && farmhouseBasementDoorInt != null)
+                MelonLogger.Msg("Inside Farmhouse before setting locks on doors");
+
+
+                if (farmhouseDoorInt1 != null && farmhouseDoorInt2 != null && farmhouseDoorInt3 != null && farmhouseBasementDoorInt != null)
                 {
                     lockManager.InitializeLock(farmhouseDoorInt1, 80, lockManager.woodDoorLockedAudio, "9769a1de-8021-4585-9648-bc439aa334fd", "FarmhouseDoor1Int", "FarmhouseDoor1Ext", Items.farmKey.GetComponent<GearItem>());
                     lockManager.InitializeLock(farmhouseDoorInt2, 80, lockManager.woodDoorLockedAudio, "57607823-0142-409a-aa92-893f35dc5b8a", "FarmhouseDoor2Int", "FarmhouseDoor2Ext", Items.farmKey.GetComponent<GearItem>());
                     lockManager.InitializeLock(farmhouseDoorInt3, 80, lockManager.woodDoorLockedAudio, "40b60936-4e53-4b76-b127-43ffd123fcb0", "FarmhouseDoor3Int", "FarmhouseDoor3Ext", Items.farmKey.GetComponent<GearItem>());
                     lockManager.InitializeLock(farmhouseBasementDoorInt, 70, lockManager.woodDoorLockedAudio, "c42cd462-fa07-4ccb-9bea-e611224260ee", "FarmhouseBasementDoorInt", "FarmhouseBasementDoorExt", Items.farmKey.GetComponent<GearItem>());
-                } 
+                }
+                else
+                {
+                    MelonLogger.Msg("Farmhouse interior door objects not found.");
+                }
 
             }
             else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmhouseABasement")
@@ -459,19 +475,75 @@ namespace MoreLockedDoors
             }
         }
         
+        public static void AddForceItemLockComponents()
+        {
+
+            var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name.Contains("MoreLockedDoors"));
+
+            LocalizedString progressText = new();
+            progressText.m_LocalizationID = "GAMEPLAY_Unlocking";
+
+            if (objects == null || objects.Count() < 1)
+            {
+                return;
+            }
+
+            foreach (var obj in objects)
+            {
+                obj.AddComponent<ForceLockItem>();
+                ForceLockItem comp = obj.GetComponent<ForceLockItem>();
+                comp.m_ForceLockAudio = "Play_WoodDoorKey";
+                comp.m_LocalizedProgressText = progressText;
+            }
+        }
+
         [HarmonyPatch(typeof(Lock), nameof(Lock.FinishForceLock))]
-        internal class LockStateSaver
+        internal class LockStateUnlockSaver
         {
 
             private static void Postfix(Lock __instance)
             {
-
-                if(__instance.tag != "Untagged")
+                if (__instance.m_CompanionLockGuid == "" || __instance.m_CompanionLockGuid.Contains("-"))
                 {
-                    if (__instance.m_LockState == LockState.Broken) Implementation.sdm.Save("Broken", __instance.tag);
+                    return;
+                }
+
+                if (__instance.m_LockState == LockState.Broken)
+                {
+                    Implementation.sdm.Save("Broken", __instance.m_CompanionLockGuid);
                 }
 
             }
+
+        }
+
+        [HarmonyPatch(typeof(Lock), nameof(Lock.Deserialize))]
+
+        internal class LockStateLoader
+        {
+            private static void Postfix(Lock __instance)
+            {
+
+                if (__instance.m_CompanionLockGuid == "" || __instance.m_CompanionLockGuid.Contains("-"))
+                {
+                    return;
+                }
+
+                if (__instance.m_LockState == LockState.Locked)
+                {
+
+                    string? lockState = Implementation.sdm.LoadLockData(__instance.m_CompanionLockGuid);
+
+                    if(lockState == "Broken")
+                    {
+                        __instance.SetLockState(LockState.Broken);
+                        Implementation.sdm.Save("Broken", __instance.m_CompanionLockGuid);
+                    }
+
+                }
+
+            }
+
 
         }
 
