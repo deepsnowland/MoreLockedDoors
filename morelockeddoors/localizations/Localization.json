@@ -1,32 +1,42 @@
 {
     "FUAR_MoreLockedDoors_PV_FarmKeyTitle":{
-        "English": "Pleasant Valley Farmhouse Key"
+        "English": "Pleasant Valley Farmhouse Key",
+        "Japanese": "プレザント・バレー農場の鍵"
     },
     "FUAR_MoreLockedDoors_PV_FarmKeyDescription":{
-        "English": "A key to the Pleasant Valley Farmhouse"
+        "English": "A key to the Pleasant Valley Farmhouse",
+        "Japanese": "プレザント・バレー農場の鍵"
     },
     "FUAR_MoreLockedDoors_PV_CommunityHallKeyTitle":{
-        "English": "Thompson's Crossing Community Hall Key"
+        "English": "Thompson's Crossing Community Hall Key",
+        "Japanese": "トムソンズ・クロッシング公民館の鍵"
     },
     "FUAR_MoreLockedDoors_PV_CommunityHallKeyDescription":{
-        "English": "A key to the Community Hall in Thompson's Crossing" 
+        "English": "A key to the Community Hall in Thompson's Crossing",
+        "Japanese": "トムソンズ・クロッシング公民館の鍵"
     },
     "FUAR_MoreLockedDoors_ML_CampOfficeKeyTitle":{
-        "English": "Mystery Lake Camp Office Key"
+        "English": "Mystery Lake Camp Office Key",
+        "Japanese": "謎の湖キャンプオフィスの鍵"
     },
     "FUAR_MoreLockedDoors_ML_CampOfficeKeyDescription":{
-        "English": "A key to the Mystery Lake camp office"
+        "English": "A key to the Mystery Lake camp office",
+        "Japanese": "謎の湖キャンプオフィスの鍵"
     },
     "FUAR_MoreLockedDoors_CH_FishingCabinKeyTitle":{
-        "English": "Fishing Cabin Key"
+        "English": "Fishing Cabin Key",
+        "Japanese": "魚釣りキャンプの鍵"
     },
     "FUAR_MoreLockedDoors_CH_FishingCabinKeyDescription":{
-        "English": "A key to one of the fishing cabins around the coastal highway"
+        "English": "A key to one of the fishing cabins around the coastal highway",
+        "Japanese": "沿岸のハイウェイの魚釣りキャンプの鍵"
     },
     "FUAR_MoreLockedDoors_AC_AnglersDenKeyTitle":{
-        "English": "Angler's Cabin Key"
+        "English": "Angler's Cabin Key",
+        "Japanese": "釣り師の巣穴の鍵"
     },
     "FUAR_MoreLockedDoors_AC_AnglersDenKeyDescription":{
-        "English": "A key left behind to the Angler's Den"
+        "English": "A key left behind to the Angler's Den",
+        "Japanese": "釣り師の巣穴に残された鍵"
     }
 }
