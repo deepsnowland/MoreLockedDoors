@@ -442,7 +442,7 @@ namespace MoreLockedDoors
                 }
 
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmhouseABasement")
+            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmHouseABasement")
             {
 
                 GameObject basementDoorBasement = GameObject.Find(Utils.Paths.farmhouseBasementDoorBasement);
