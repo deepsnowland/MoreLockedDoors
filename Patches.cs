@@ -474,7 +474,6 @@ namespace MoreLockedDoors
                 lockManager.InitializeLock(anglersDenDoorExt, 60, lockManager.woodDoorLockedAudio, "7a33c7df-02cc-49a3-8766-9fa022979c50", "AnglersDenDoorExt", "", Items.anglersDenKey.GetComponent<GearItem>());
             }
         }
-        
         public static void AddForceItemLockComponents()
         {
 

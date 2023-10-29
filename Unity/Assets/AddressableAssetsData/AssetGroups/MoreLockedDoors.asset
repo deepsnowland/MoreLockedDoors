@@ -53,6 +53,10 @@ MonoBehaviour:
     m_Address: ico_GearItem__MoreLockedDoors_PV_FarmKey 1
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: aaf7850233a6da24784cff0237102236
+    m_Address: GEAR_MoreLockedDoors_AC_AnglersDenKey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 54bf1587163f76a49ba78d64d7eb5b38, type: 2}
   m_SchemaSet:
