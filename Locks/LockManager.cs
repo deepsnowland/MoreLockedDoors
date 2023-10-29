@@ -149,7 +149,6 @@ namespace MoreLockedDoors.Locks
 
                 
                 addedLock.m_AttemptedToOpen = false;
-                addedLock.MaybeGetHoverIconsToShow();
                 addedLock.AssignBindingOverrides();
 
 
@@ -189,30 +188,7 @@ namespace MoreLockedDoors.Locks
                 return true;
             }
         }
-        //not currently used
-        public void SetupHoverIconsOverride(Lock lck, GameObject obj)
-        {
-            lck.m_HoverIcons = obj.GetComponent<HoverIconsToShow>();
-            MelonLogger.Msg("Hover Icons: {0}", lck.m_HoverIcons);
-            if (lck.m_HoverIcons == null)
-            {
-                MelonLogger.Msg("Icons are null, working...");
-                lck.m_HoverIcons = obj.AddComponent<HoverIconsToShow>();
-                MelonLogger.Msg("Adding component to object and setting lock icons variable");
-                lck.m_HoverIcons.m_HoverIcons = new HoverIconsToShow.HoverIcons[1] { HoverIconsToShow.HoverIcons.Locked };
-                MelonLogger.Msg("Setting locked icon");
-                return;
-            }
-            List<HoverIconsToShow.HoverIcons> list = new List<HoverIconsToShow.HoverIcons>(lck.m_HoverIcons.m_HoverIcons);
-            if (!list.Contains(HoverIconsToShow.HoverIcons.Locked))
-            {
-                list.Add(HoverIconsToShow.HoverIcons.Locked);
-            }
-            lck.m_HoverIcons.m_HoverIcons = list.ToArray();
-            MelonLogger.Msg("Setting lock icons variable to the array of icons.");
-
-
-        }
+       
 
     }
 }
