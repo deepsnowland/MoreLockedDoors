@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ModData;
+using MoreLockedDoors.Locks;
 
 namespace MoreLockedDoors.Utils
 {
@@ -16,11 +18,13 @@ namespace MoreLockedDoors.Utils
             dm.Save(data, suffix);
         }
 
-        public string LoadLockData(string suffix)
+        public CustomLockSaveDataProxy LoadLockData(string suffix)
         {
-            string? lockState = dm.Load(suffix);
+            string? data = dm.Load(suffix);
 
-            return lockState;
+            CustomLockSaveDataProxy sdp = JsonSerializer.Deserialize<CustomLockSaveDataProxy>(data);
+
+            return sdp;
         }
 
     }

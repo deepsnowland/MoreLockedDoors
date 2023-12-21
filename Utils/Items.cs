@@ -5,22 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
+using Il2Cpp;
 
 namespace MoreLockedDoors.Utils
 {
     internal class Items
     {
 
-        public static GameObject prybar = Addressables.LoadAssetAsync<GameObject>("GEAR_Prybar").WaitForCompletion();
-        public static GameObject boltcutters = Addressables.LoadAssetAsync<GameObject>("GEAR_Boltcutters").WaitForCompletion();
-        public static GameObject hacksaw = Addressables.LoadAssetAsync<GameObject>("GEAR_Hacksaw").WaitForCompletion();
+        public static GearItem prybar = Addressables.LoadAssetAsync<GameObject>("GEAR_Prybar").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem boltcutters = Addressables.LoadAssetAsync<GameObject>("GEAR_Boltcutters").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem hacksaw = Addressables.LoadAssetAsync<GameObject>("GEAR_Hacksaw").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem hatchet = Addressables.LoadAssetAsync<GameObject>("GEAR_Hatchet").WaitForCompletion().GetComponent<GearItem>();
 
         //Custom items
-        public static GameObject farmKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_FarmKey").WaitForCompletion();
-        public static GameObject communityHallKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_CommunityHallKey").WaitForCompletion();
-        public static GameObject campOfficeKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_ML_CampOfficeKey").WaitForCompletion();
-        public static GameObject anglersDenKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_AC_AnglersDenKey").WaitForCompletion();
-        public static GameObject fishingCabinKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_CH_FishingCabinKey").WaitForCompletion();
+        public static GearItem farmKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_FarmKey").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem communityHallKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_CommunityHallKey").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem campOfficeKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_ML_CampOfficeKey").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem anglersDenKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_AC_AnglersDenKey").WaitForCompletion().GetComponent<GearItem>();
+        public static GearItem fishingCabinKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_CH_FishingCabinKey").WaitForCompletion().GetComponent<GearItem>();
 
     }
 }
