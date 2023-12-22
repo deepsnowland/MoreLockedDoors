@@ -13,6 +13,7 @@ using MelonLoader;
 
 namespace MoreLockedDoors.Locks
 {
+    [RegisterTypeInIl2Cpp]
     internal class CustomLock : MonoBehaviour
     {
         private ObjectGuid m_GUID;
@@ -20,20 +21,20 @@ namespace MoreLockedDoors.Locks
         private LockState m_LockState;
 
         private bool m_CheckedForPair;
-        public string m_Pair;
+        private string m_Pair;
 
         private bool m_AttemptedToOpen;
 
-        private List<GearItem> m_ItemsUsedToForceLock;
+        private List<string> m_ItemsUsedToForceLock;
         private GearItem m_GearItemUsedToUnlock;
 
-        public float m_ForceLockDurationSecondsMin = 3f;
-        public float m_ForceLockDurationSecondsMax = 4f;
+        private float m_ForceLockDurationSecondsMin = 3f;
+        private float m_ForceLockDurationSecondsMax = 4f;
 
         public string m_LockedAudio;
         public string m_UnlockAudio;
 
-        public uint m_ForceLockAudioID;
+        private uint m_ForceLockAudioID;
 
         private bool m_IsBeingInteractedWith;
         private float m_InteractionTimer;
@@ -41,23 +42,23 @@ namespace MoreLockedDoors.Locks
         private float m_RandomFailureTime;
         private bool m_BreakOnUse;
 
-        public bool m_UseHoverTextColour;
+        private bool m_UseHoverTextColour;
 
         private HoverIconsToShow m_HoverIcons;
 
         private PlayerControlMode m_RestoreControlMode;
 
-        public void Awake() 
+        public void Awake()
         {
             m_GUID = base.GetComponent<ObjectGuid>();
             MelonLogger.Msg("Awakening... GUID is: {0}", m_GUID.PDID);
             LoadData();
             m_AttemptedToOpen = false;
-        
+            MaybeGetHoverIcons();
         }
-        public void Start() 
+        public void Start()
         {
-            MaybeUnlockdueToPairBeingUnlocked();
+            this.m_CheckedForPair = false;
         }
 
         public void Update()
@@ -69,7 +70,7 @@ namespace MoreLockedDoors.Locks
 
             if (!this.m_CheckedForPair)
             {
-                this.MaybeUnlockdueToPairBeingUnlocked();
+                this.MaybeUnlockDueToPairBeingUnlocked();
                 this.m_CheckedForPair = true;
             }
 
@@ -82,7 +83,7 @@ namespace MoreLockedDoors.Locks
             if (m_IsBeingInteractedWith)
             {
                 m_InteractionTimer += Time.deltaTime;
-                if(m_InteractionTimer <= 0f)
+                if (m_InteractionTimer <= 0f)
                 {
                     Cancel();
                     ForceLockComplete(true, false, 1f);
@@ -116,7 +117,7 @@ namespace MoreLockedDoors.Locks
 
             SaveDataManager sdm = Implementation.sdm;
 
-            CustomLockSaveDataProxy sdp = new CustomLockSaveDataProxy(m_LockState, m_GUID, m_ItemsUsedToForceLock, m_LockedAudio, m_Pair);
+            CustomLockSaveDataProxy sdp = new CustomLockSaveDataProxy(m_LockState, m_ItemsUsedToForceLock, m_LockedAudio, m_Pair);
 
             string dataToSave = JsonSerializer.Serialize(sdp);
             sdm.Save(dataToSave, m_GUID.PDID);
@@ -130,7 +131,7 @@ namespace MoreLockedDoors.Locks
             }
             else
             {
-               return LockState.Unlocked;
+                return LockState.Unlocked;
             }
         }
 
@@ -144,39 +145,43 @@ namespace MoreLockedDoors.Locks
             return m_LockState == LockState.Locked;
         }
 
-        public void MaybeUnlockdueToPairBeingUnlocked()
+        public void MaybeUnlockDueToPairBeingUnlocked()
         {
-            if (m_GUID == null || m_LockState == LockState.Unlocked) return;
+            if (m_GUID == null || m_LockState == LockState.Broken) return;
 
             SaveDataManager sdm = Implementation.sdm;
 
             //check for pair lock here
+            CustomLockSaveDataProxy? pair = sdm.LoadLockData(m_Pair);
 
-            CustomLockSaveDataProxy pair = sdm.LoadLockData(m_Pair);
+            //this ensures that the lock's pair gets saved if it hasn't been loaded yet so when it does activate for the first time, it's loaded accurately
+            if (pair == null)
+            {
+                pair = new CustomLockSaveDataProxy(m_LockState, m_ItemsUsedToForceLock, m_LockedAudio, m_GUID.PDID);
+                string dataToSave = JsonSerializer.Serialize(pair);
+                sdm.Save(dataToSave, m_Pair);
+                return;
+            }
 
             if (pair != null && pair.m_LockState == LockState.Unlocked || pair.m_LockState == LockState.Broken)
             {
                 LockOrUnlock(LockState.Unlocked);
-                SaveData(); //save after unlocking
+                SaveData();
             }
         }
 
+        //for when a lock is unlocked by the player
         public void UnlockPair()
         {
-
             if (m_Pair == null) return;
 
             SaveDataManager sdm = Implementation.sdm;
 
-            CustomLockSaveDataProxy pair = sdm.LoadLockData(m_Pair);
-            if(pair != null)
-            {
-                pair.m_LockState = LockState.Broken;
-                string dataToSave = JsonSerializer.Serialize(pair);
-                sdm.Save(dataToSave, m_Pair);
-            }
+            CustomLockSaveDataProxy pair = sdm.LoadLockData(m_Pair) != null ? sdm.LoadLockData(m_Pair) : new CustomLockSaveDataProxy(LockState.Broken, m_ItemsUsedToForceLock, m_LockedAudio, m_GUID.PDID); 
 
-
+            pair.m_LockState = LockState.Broken;
+            string dataToSave = JsonSerializer.Serialize(pair);
+            sdm.Save(dataToSave, m_Pair);
         }
 
         private void ForceLockComplete(bool success, bool cancel, float progress)
@@ -213,27 +218,26 @@ namespace MoreLockedDoors.Locks
             InterfaceManager.GetPanel<Panel_HUD>().CancelItemProgressBar();
         }
 
-        public void UnlockBegin()
+        public void UnlockBegin(ref bool canOpen)
         {
 
-            if (this.m_GearItemUsedToUnlock == null)
-            {
-                this.PlayLockedAudio();
-                return;
-            }
             this.m_GearItemUsedToUnlock = this.ChooseGearItemToUnlock();
+
+            MelonLogger.Msg("Gear item used to unlock: {0}", m_GearItemUsedToUnlock);
 
             if (!this.m_GearItemUsedToUnlock)
             {
                 this.PlayLockedAudio();
-                //HUD Message stuff
+                HUDMessage.AddMessage("DEBUG: Don't have item to unlock door!");
                 return;
             }
             if (this.m_GearItemUsedToUnlock.m_ForceLockItem == null)
             {
                 this.PlayLockedAudio();
+                HUDMessage.AddMessage("DEBUG: Item used to unlock doesn't have force unlock item component on it!");
                 return;
             }
+            canOpen = true;
             this.StartInteract();
         }
 
@@ -256,44 +260,29 @@ namespace MoreLockedDoors.Locks
             GameAudioManager.PlaySound(this.m_LockedAudio, Systems.GetEngineSystems());
         }
 
-        public bool PlayerHasRequiredGearToUnlock()
+        public GearItem GetRequiredGearToUnlock(string selection = "")
         {
             //check inventory for any of the gear items and returns true if found
 
             GearItem highestConditionGearThatMatchesName = null;
-
-            foreach (var gi in m_ItemsUsedToForceLock)
+           
+            foreach (var giStr in m_ItemsUsedToForceLock)
             {
-                highestConditionGearThatMatchesName = GameManager.GetInventoryComponent().GetHighestConditionGearThatMatchesName(gi.name);
-                if (!highestConditionGearThatMatchesName)
-                {
-                    AlternateTools component = gi.GetComponent<AlternateTools>();
-                    if (component)
-                    {
-                        for (int i = 0; i < component.m_AlternateToolsList.Length; i++)
-                        {
-                            if (component.m_AlternateToolsList[i])
-                            {
-                                highestConditionGearThatMatchesName = GameManager.GetInventoryComponent().GetHighestConditionGearThatMatchesName(component.m_AlternateToolsList[i].name);
-                                if (highestConditionGearThatMatchesName != null)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
+                highestConditionGearThatMatchesName = GameManager.GetInventoryComponent().GetHighestConditionGearThatMatchesName(giStr);
+                if (m_ItemsUsedToForceLock.Count > 1 && (giStr.ToLowerInvariant().Contains("key") || giStr.ToLowerInvariant().Contains(selection))) break;
             }
-            return highestConditionGearThatMatchesName != null;
+            return highestConditionGearThatMatchesName;
         }
         private GearItem ChooseGearItemToUnlock()
         {
             //if lock only needs 1 item and player has it, choose that one
-            if (m_ItemsUsedToForceLock.Count == 1 && PlayerHasRequiredGearToUnlock()) return m_ItemsUsedToForceLock[0];
+            if (m_ItemsUsedToForceLock.Count == 1) return GetRequiredGearToUnlock();
 
-            //otherwise open selection UI
+           
 
-            return m_ItemsUsedToForceLock[0];
+            //otherwise open selection UI or something else
+
+            return GetRequiredGearToUnlock();
         }
 
         public void StartInteract()
@@ -324,10 +313,10 @@ namespace MoreLockedDoors.Locks
             {
                 progressLabel = this.m_GearItemUsedToUnlock.m_ForceLockItem.m_LocalizedProgressText.Text();
             }
-            
-             InterfaceManager.GetPanel<Panel_HUD>().StartItemProgressBar(this.m_InteractionTimer, progressLabel, null, new Action(this.ProgressBarStarted));
-             return;
-            
+
+            InterfaceManager.GetPanel<Panel_HUD>().StartItemProgressBar(this.m_InteractionTimer, progressLabel, null, new Action(this.ProgressBarStarted));
+            return;
+
         }
 
         public void ProgressBarStarted()

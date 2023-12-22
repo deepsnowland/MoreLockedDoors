@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MelonLoader;
 using ModData;
 using MoreLockedDoors.Locks;
 
@@ -21,6 +22,12 @@ namespace MoreLockedDoors.Utils
         public CustomLockSaveDataProxy LoadLockData(string suffix)
         {
             string? data = dm.Load(suffix);
+
+            if (data is null)
+            {
+                MelonLogger.Msg("Getting lock data but there is nothing saved under the suffix: {0}", suffix);
+                return null;
+            }
 
             CustomLockSaveDataProxy sdp = JsonSerializer.Deserialize<CustomLockSaveDataProxy>(data);
 

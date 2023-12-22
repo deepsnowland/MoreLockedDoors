@@ -19,27 +19,41 @@ namespace MoreLockedDoors.Patches
         public class ForceLock
         {
 
-            public static void Prefix(LoadScene __instance)
+            public static bool Prefix(LoadScene __instance)
             {
-                MelonLogger.Msg("Performing hold action...");
-                __instance.gameObject.GetComponent<CustomLock>().StartInteract();
+
+                bool canOpen = false;
+
+                if (__instance.gameObject.GetComponent<CustomLock>())
+                {
+                    __instance.gameObject.GetComponent<CustomLock>().UnlockBegin(ref canOpen);
+
+                    if (!canOpen) return false;
+                    else return true;
+                }
+                return true;
             }
 
         }
 
-        [HarmonyPatch(typeof(ForceLockItem), nameof(ForceLockItem.Start))]
+        [HarmonyPatch(typeof(GearItem), nameof(GearItem.Awake))]
 
         public class AddHatchetUnlockAudio
         {
 
-            public static void Postfix(ForceLockItem __instance)
+            public static void Postfix(GearItem __instance)
             {
 
-                if (__instance.GetComponent<GearItem>().name.ToLowerInvariant().Contains("hatchet"))
+                if (GameManager.IsMainMenuActive() || GameManager.IsBootSceneActive() || GameManager.IsEmptySceneActive() || GameManager.m_ActiveScene == null) return;
+                
+                if (__instance.name.ToLowerInvariant().Contains("hatchet"))
                 {
-                    //set this to hatchet wood chopping audio
-                    __instance.m_ForceLockAudio = "";
-                }
+                    if (__instance.GetComponent<ForceLockItem>())
+                    {
+                        __instance.GetComponent<ForceLockItem>().m_ForceLockAudio = "";
+                    }
+                    
+                } 
 
             }
 

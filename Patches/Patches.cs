@@ -28,6 +28,8 @@ namespace MoreLockedDoors.Patches
             {
                 LockManager lockManager = new();
 
+                AddCustomLock_Test(lockManager);
+
                 AddForceItemLockComponents();
 
             }
@@ -40,6 +42,8 @@ namespace MoreLockedDoors.Patches
             {
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "InteriorLoadTrigger");
+
+                List<string> campOfficetools = new List<string>() { Items.campOfficeKey, Items.hatchet };
 
                 //lock Camp Office exterior doors
                 GameObject campOfficeFrontDoor = null; //5662730c-dd4b-401d-b63e-3e5379a2ea05
@@ -64,10 +68,9 @@ namespace MoreLockedDoors.Patches
 
                     int chance = 80;
 
-                    List<GearItem> tools = new List<GearItem>() { Items.campOfficeKey, Items.hatchet };
 
-                    lockManager.InitializeCustomLock(campOfficeFrontDoor, ref chance, lockManager.woodDoorLockedAudio, "1b38bf5f-fcf1-4414-85a5-2287a083561c", tools);
-                    lockManager.InitializeCustomLock(campOfficeBackDoor, ref chance, lockManager.woodDoorLockedAudio, "7ae0e7e1-c485-488e-86e5-3cc35c5a8f6b", tools);
+                    lockManager.InitializeCustomLock(campOfficeFrontDoor, ref chance, lockManager.woodDoorLockedAudio, "1b38bf5f-fcf1-4414-85a5-2287a083561c", campOfficetools);
+                    lockManager.InitializeCustomLock(campOfficeBackDoor, ref chance, lockManager.woodDoorLockedAudio, "7ae0e7e1-c485-488e-86e5-3cc35c5a8f6b", campOfficetools);
                 }
 
             }
@@ -75,13 +78,13 @@ namespace MoreLockedDoors.Patches
             {
                 GameObject campOfficeFrontDoor = GameObject.Find(Paths.campOfficeFrontDoorInt);
                 GameObject campOfficeBackDoor = GameObject.Find(Paths.campOfficeBackDoorInt);
+                List<string> campOfficetools = new List<string>() { Items.campOfficeKey, Items.hatchet };
 
                 int chance = 80;
 
-                List<GearItem> tools = new List<GearItem>() { Items.campOfficeKey, Items.hatchet };
 
-                lockManager.InitializeCustomLock(campOfficeFrontDoor, ref chance, lockManager.woodDoorLockedAudio, "5662730c-dd4b-401d-b63e-3e5379a2ea05", tools);
-                lockManager.InitializeCustomLock(campOfficeBackDoor, ref chance, lockManager.woodDoorLockedAudio, "19e12caa-9b4a-48ba-a73a-c5473633a8ac", tools);
+                lockManager.InitializeCustomLock(campOfficeFrontDoor, ref chance, lockManager.woodDoorLockedAudio, "5662730c-dd4b-401d-b63e-3e5379a2ea05", campOfficetools);
+                lockManager.InitializeCustomLock(campOfficeBackDoor, ref chance, lockManager.woodDoorLockedAudio, "19e12caa-9b4a-48ba-a73a-c5473633a8ac", campOfficetools);
             }
         }
 

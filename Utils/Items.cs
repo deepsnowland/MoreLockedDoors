@@ -6,23 +6,31 @@ using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
 using Il2Cpp;
+using ModComponent;
 
 namespace MoreLockedDoors.Utils
 {
     internal class Items
     {
 
-        public static GearItem prybar = Addressables.LoadAssetAsync<GameObject>("GEAR_Prybar").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem boltcutters = Addressables.LoadAssetAsync<GameObject>("GEAR_Boltcutters").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem hacksaw = Addressables.LoadAssetAsync<GameObject>("GEAR_Hacksaw").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem hatchet = Addressables.LoadAssetAsync<GameObject>("GEAR_Hatchet").WaitForCompletion().GetComponent<GearItem>();
+        public static string prybar = "GEAR_Prybar";
+        public static string boltcutters = "GEAR_Boltcutters";
+        public static string hacksaw = "GEAR_Hacksaw";
+        public static string hatchet = "GEAR_Hatchet";
 
         //Custom items
-        public static GearItem farmKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_FarmKey").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem communityHallKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_CommunityHallKey").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem campOfficeKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_ML_CampOfficeKey").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem anglersDenKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_AC_AnglersDenKey").WaitForCompletion().GetComponent<GearItem>();
-        public static GearItem fishingCabinKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_CH_FishingCabinKey").WaitForCompletion().GetComponent<GearItem>();
+        public static string farmKey = "GEAR_MoreLockedDoors_PV_FarmKey";
+        public static string communityHallKey = "GEAR_MoreLockedDoors_PV_CommunityHallKey";
+        public static string campOfficeKey = "GEAR_MoreLockedDoors_ML_CampOfficeKey";
+        public static string anglersDenKey = "GEAR_MoreLockedDoors_AC_AnglersDenKey";
+        public static string fishingCabinKey = "GEAR_MoreLockedDoors_CH_FishingCabinKey";
+
+        //unsued
+        public static GearItem GetGearItem(string prefabName)
+        {
+            GameObject prefab = Addressables.LoadAssetAsync<GameObject>(prefabName).WaitForCompletion();
+            return prefab.GetComponent<GearItem>();
+        }
 
     }
 }
