@@ -41,7 +41,7 @@ namespace MoreLockedDoors.Locks
                 ObjectGuid guid = targetObj.GetComponent<ObjectGuid>();
 
                 //if data has not been saved for this lock yet, save a new copy so when the lock awakens it loads the data. Otherwise, save the existing copy because why not, it will still load it on awake.
-                CustomLockSaveDataProxy sdp = sdm.LoadLockData(guid.PDID) != null ? sdm.LoadLockData(guid.PDID) : new CustomLockSaveDataProxy(lockState, tools, audio, pair);
+                CustomLockSaveDataProxy sdp = sdm.LoadLockData(guid.PDID) != null ? sdm.LoadLockData(guid.PDID) : new CustomLockSaveDataProxy(lockState, false, tools, audio, pair);
 
                 string dataToSave = JsonSerializer.Serialize(sdp);
                 sdm.Save(dataToSave, guid.PDID);

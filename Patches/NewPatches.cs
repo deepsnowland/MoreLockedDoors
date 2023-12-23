@@ -9,6 +9,7 @@ using HarmonyLib;
 using Il2Cpp;
 using MoreLockedDoors.Locks;
 using Unity.VisualScripting;
+using MoreLockedDoors.Utils;
 
 namespace MoreLockedDoors.Patches
 {
@@ -85,37 +86,42 @@ namespace MoreLockedDoors.Patches
 
         [HarmonyPatch(typeof(GearItem), nameof(GearItem.Awake))]
 
-        public class AddHatchetUnlockItem
+        public class RemoveCollectibleFromBoltcutters : MonoBehaviour
         {
 
             public static void Postfix(GearItem __instance)
             {
-
-                if (GameManager.IsMainMenuActive() || GameManager.IsBootSceneActive() || GameManager.IsEmptySceneActive() || GameManager.m_ActiveScene == null) return;
-
-                if (__instance.name.ToLowerInvariant().Contains("hatchet"))
+                if (__instance.DisplayName.ToLowerInvariant().Contains("bolt"))
                 {
-                    if (!__instance.gameObject.GetComponent<ForceLockItem>())
+                    Destroy(__instance.GetComponent<NarrativeCollectibleItem>());
+                    __instance.m_GearItemData.m_BaseWeightKG = 1.5f;
+                }
+
+
+            }
+        }
+
+        [HarmonyPatch(typeof(Weather), nameof(Weather.CalculateCurrentTemperature))]
+        internal class DropTempIndoorsIfDoorsAreBrokenOpen
+        {
+            static void Prefix(Weather __instance)
+            {
+
+                if (Systems.IsAssemblyPresent("CoolHome") || !__instance.IsIndoorEnvironment()) return;
+
+                CustomLock[] locks = GameObject.FindObjectsOfType<CustomLock>();
+
+                foreach (var lck in locks)
+                {
+                    if (lck.IsBrokenOpen())
                     {
-                        MelonLogger.Msg("hatchet doesn't have force lock item, adding...");
-                        __instance.gameObject.AddComponent<ForceLockItem>();
-                        __instance.gameObject.GetComponent<ForceLockItem>().m_LocalizedProgressText = new LocalizedString();
-                        __instance.gameObject.GetComponent<ForceLockItem>().m_LocalizedProgressText.m_LocalizationID = "Chopping...";
-                        __instance.gameObject.GetComponent<ForceLockItem>().m_ForceLockAudio = "PLAY_HARVESTINGWOODRECLAIMED"; //no audio yet
-
-                        __instance.m_ForceLockItem = __instance.gameObject.GetComponent<ForceLockItem>();
+                        __instance.m_IndoorTemperatureCelsius = __instance.GetBaseTemperature();
+                        break;
                     }
-
                 }
 
             }
-
         }
-
-
-        //testing patches
-
-
 
     }
 }

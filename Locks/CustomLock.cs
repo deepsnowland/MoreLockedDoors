@@ -20,6 +20,8 @@ namespace MoreLockedDoors.Locks
 
         private LockState m_LockState;
 
+        private bool m_IsBrokenOpen = false;
+
         private bool m_CheckedForPair;
         private string m_Pair;
 
@@ -113,6 +115,7 @@ namespace MoreLockedDoors.Locks
             CustomLockSaveDataProxy sdp = sdm.LoadLockData(m_GUID.PDID);
 
             m_LockState = sdp.m_LockState;
+            m_IsBrokenOpen = sdp.m_IsBrokenOpen;
             m_ItemsUsedToForceLock = sdp.m_ItemsUsedToForceLock;
             m_LockedAudio = sdp.m_LockedAudio;
             m_Pair = sdp.m_Pair;
@@ -126,7 +129,7 @@ namespace MoreLockedDoors.Locks
 
             SaveDataManager sdm = Implementation.sdm;
 
-            CustomLockSaveDataProxy sdp = new CustomLockSaveDataProxy(m_LockState, m_ItemsUsedToForceLock, m_LockedAudio, m_Pair);
+            CustomLockSaveDataProxy sdp = new CustomLockSaveDataProxy(m_LockState, m_IsBrokenOpen, m_ItemsUsedToForceLock, m_LockedAudio, m_Pair);
 
             string dataToSave = JsonSerializer.Serialize(sdp);
             sdm.Save(dataToSave, m_GUID.PDID);
@@ -146,12 +149,19 @@ namespace MoreLockedDoors.Locks
 
         public void LockOrUnlock(LockState locked)
         {
+
+            if (m_GearItemUsedToUnlock != null && m_GearItemUsedToUnlock.name.ToLowerInvariant().Contains("hatchet")) m_IsBrokenOpen = true;
             m_LockState = locked;
         }
 
         public bool IsLocked()
         {
             return m_LockState == LockState.Locked;
+        }
+
+        public bool IsBrokenOpen()
+        {
+            return m_IsBrokenOpen;
         }
 
         public void MaybeUnlockDueToPairBeingUnlocked()
@@ -166,7 +176,7 @@ namespace MoreLockedDoors.Locks
             //this ensures that the lock's pair gets saved if it hasn't been loaded yet so when it does activate for the first time, it's loaded accurately
             if (pair == null)
             {
-                pair = new CustomLockSaveDataProxy(m_LockState, m_ItemsUsedToForceLock, m_LockedAudio, m_GUID.PDID);
+                pair = new CustomLockSaveDataProxy(m_LockState, m_IsBrokenOpen, m_ItemsUsedToForceLock, m_LockedAudio, m_GUID.PDID);
                 string dataToSave = JsonSerializer.Serialize(pair);
                 sdm.Save(dataToSave, m_Pair);
                 return;
@@ -174,7 +184,7 @@ namespace MoreLockedDoors.Locks
 
             if (pair != null && pair.m_LockState == LockState.Unlocked || pair.m_LockState == LockState.Broken)
             {
-                LockOrUnlock(LockState.Unlocked);
+                LockOrUnlock(pair.m_LockState);
                 SaveData();
             }
         }
@@ -186,9 +196,10 @@ namespace MoreLockedDoors.Locks
 
             SaveDataManager sdm = Implementation.sdm;
 
-            CustomLockSaveDataProxy pair = sdm.LoadLockData(m_Pair) != null ? sdm.LoadLockData(m_Pair) : new CustomLockSaveDataProxy(LockState.Broken, m_ItemsUsedToForceLock, m_LockedAudio, m_GUID.PDID); 
+            CustomLockSaveDataProxy pair = sdm.LoadLockData(m_Pair) != null ? sdm.LoadLockData(m_Pair) : new CustomLockSaveDataProxy(LockState.Broken, m_IsBrokenOpen, m_ItemsUsedToForceLock, m_LockedAudio, m_GUID.PDID); 
 
             pair.m_LockState = LockState.Broken;
+            pair.m_IsBrokenOpen = m_IsBrokenOpen;
             string dataToSave = JsonSerializer.Serialize(pair);
             sdm.Save(dataToSave, m_Pair);
         }
@@ -200,6 +211,7 @@ namespace MoreLockedDoors.Locks
                 this.LockOrUnlock(LockState.Broken);
                 //do delegate whatever that is
                 this.UnlockPair();
+                this.SaveData();
             }
             if (this.m_GearItemUsedToUnlock.m_DegradeOnUse)
             {
@@ -236,7 +248,7 @@ namespace MoreLockedDoors.Locks
             if (!this.m_GearItemUsedToUnlock)
             {
                 this.PlayLockedAudio();
-                HUDMessage.AddMessage("DEBUG: Don't have item to unlock door!");
+                HUDMessage.AddMessage(GetHUDMessage());
                 return;
             }
             if (this.m_GearItemUsedToUnlock.m_ForceLockItem == null)
@@ -371,6 +383,20 @@ namespace MoreLockedDoors.Locks
             this.m_HoverIcons.m_HoverIcons = list.ToArray();
         }
 
+        private string GetHUDMessage()
+        {
+
+            string hudMessage = "Requires ";
+            
+            for(int i = 0; i < m_ItemsUsedToForceLock.Count; i++)
+            {
+                if (i == 0) hudMessage += Items.GetGearItem(m_ItemsUsedToForceLock[i]).DisplayName;
+                else if (i > 0 && i != m_ItemsUsedToForceLock.Count - 1) hudMessage += ", " + Items.GetGearItem(m_ItemsUsedToForceLock[i]).DisplayName;
+                else if (i == m_ItemsUsedToForceLock.Count - 1) hudMessage += " or " + Items.GetGearItem(m_ItemsUsedToForceLock[i]).DisplayName;
+            }
+
+            return hudMessage;
+        }
 
     }
 }

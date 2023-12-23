@@ -12,6 +12,7 @@ using Il2Cpp;
 using MoreLockedDoors.Locks;
 using LoadScene = Il2Cpp.LoadScene;
 using MoreLockedDoors.Utils;
+using Il2CppNodeCanvas.Tasks.Actions;
 
 namespace MoreLockedDoors.Patches
 {
@@ -92,7 +93,6 @@ namespace MoreLockedDoors.Patches
                 lockManager.InitializeCustomLock(campOfficeBackDoor, ref chance, lockManager.woodDoorLockedAudio, "19e12caa-9b4a-48ba-a73a-c5473633a8ac", campOfficetools);
             }
         }
-        
         public static void AddMountainTownLocks()
         {
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "MountainTownRegion")
@@ -269,7 +269,7 @@ namespace MoreLockedDoors.Patches
                 if (fishingCabinDoorExt != null)
                 {
                     int fishingCabinChance = 70;
-                    lockManager.InitializeCustomLock(fishingCabinDoorExt, ref fishingCabinChance, lockManager.woodDoorLockedAudio, "", new List<string> { Items.fishingCabinKey });
+                    lockManager.InitializeCustomLock(fishingCabinDoorExt, ref fishingCabinChance, lockManager.woodDoorLockedAudio, "", new List<string> { Items.fishingCabinKey, Items.hatchet });
                 }
 
             }
@@ -509,25 +509,50 @@ namespace MoreLockedDoors.Patches
         public static void AddForceItemLockComponents()
         {
 
-            var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name.Contains("MoreLockedDoors"));
+            var customObjects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name.Contains("MoreLockedDoors"));
+            var vanillaObjects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name.Contains("Hatchet"));
 
             LocalizedString progressText = new();
             progressText.m_LocalizationID = "GAMEPLAY_Unlocking";
 
-            if (objects == null || objects.Count() < 1)
+            if (customObjects == null || customObjects.Count() < 1)
             {
                 return;
             }
 
-            foreach (var obj in objects)
+            foreach (var obj in customObjects)
             {
                 obj.AddComponent<ForceLockItem>();
                 ForceLockItem comp = obj.GetComponent<ForceLockItem>();
                 comp.m_ForceLockAudio = "Play_WoodDoorKey";
                 comp.m_LocalizedProgressText = progressText;
             }
-        }
 
+            if (vanillaObjects == null || vanillaObjects.Count() < 1)
+            {
+                return;
+            }
+
+            foreach (var obj in vanillaObjects)
+            {
+                obj.AddComponent<ForceLockItem>();
+                ForceLockItem comp = obj.GetComponent<ForceLockItem>();
+
+                comp.m_ForceLockAudio = "Play_WoodDoorKey";
+                comp.m_LocalizedProgressText = progressText;
+
+                if (obj.name.Contains("Hatchet"))
+                {
+                    progressText.m_LocalizationID = "Chopping...";
+
+                    comp.m_ForceLockAudio = "PLAY_HARVESTINGWOODRECLAIMED";
+                    comp.m_LocalizedProgressText = progressText;
+                }
+
+               
+            }
+
+        }
         public static void ForceUnlockAllVanillaLocks(GameObject sourceObj)
         {
 
