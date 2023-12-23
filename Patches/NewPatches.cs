@@ -80,7 +80,7 @@ namespace MoreLockedDoors.Patches
                         __instance.gameObject.AddComponent<ForceLockItem>();
                         __instance.gameObject.GetComponent<ForceLockItem>().m_LocalizedProgressText = new LocalizedString();
                         __instance.gameObject.GetComponent<ForceLockItem>().m_LocalizedProgressText.m_LocalizationID = "Chopping...";
-                        __instance.gameObject.GetComponent<ForceLockItem>().m_ForceLockAudio = ""; //no audio yet
+                        __instance.gameObject.GetComponent<ForceLockItem>().m_ForceLockAudio = "PLAY_HARVESTINGWOODRECLAIMED"; //no audio yet
 
                         __instance.m_ForceLockItem = __instance.gameObject.GetComponent<ForceLockItem>();
                     }
