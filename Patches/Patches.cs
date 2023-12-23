@@ -68,7 +68,6 @@ namespace MoreLockedDoors.Patches
 
                     int chance = 80;
 
-
                     lockManager.InitializeCustomLock(campOfficeFrontDoor, ref chance, lockManager.woodDoorLockedAudio, "1b38bf5f-fcf1-4414-85a5-2287a083561c", campOfficetools);
                     lockManager.InitializeCustomLock(campOfficeBackDoor, ref chance, lockManager.woodDoorLockedAudio, "7ae0e7e1-c485-488e-86e5-3cc35c5a8f6b", campOfficetools);
                 }

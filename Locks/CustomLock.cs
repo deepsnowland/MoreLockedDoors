@@ -82,13 +82,22 @@ namespace MoreLockedDoors.Locks
 
             if (m_IsBeingInteractedWith)
             {
-                m_InteractionTimer += Time.deltaTime;
+                if (GameManager.GetPlayerManagerComponent().GetControlMode() != PlayerControlMode.Locked) GameManager.GetPlayerManagerComponent().SetControlMode(PlayerControlMode.Locked);
+
+                m_InteractionTimer -= Time.deltaTime;
                 if (m_InteractionTimer <= 0f)
                 {
                     Cancel();
                     ForceLockComplete(true, false, 1f);
                     return;
                 }
+                else
+                {
+                    //check if player is not holding down LMB
+                    if (!Input.GetMouseButton(0)) Cancel();
+                }
+
+
                 if (GameManager.GetPlayerManagerComponent().GetControlMode() == PlayerControlMode.Struggle)
                 {
                     Cancel();
@@ -208,22 +217,21 @@ namespace MoreLockedDoors.Locks
                 AkSoundEngine.StopPlayingID(this.m_ForceLockAudioID, Systems.GetEngineSystems().GetComponent<GameAudioManager>().m_StopAudioFadeOutMicroseconds);
                 this.m_ForceLockAudioID = 0U;
             }
+            
+            this.m_IsBeingInteractedWith = false;
+            this.m_InteractionTimer = 0f;
             if (GameManager.GetPlayerManagerComponent().GetControlMode() == PlayerControlMode.Locked)
             {
                 GameManager.GetPlayerManagerComponent().SetControlMode(m_RestoreControlMode);
             }
-            this.m_IsBeingInteractedWith = false;
-            this.m_InteractionTimer = 0f;
-            GameManager.GetPlayerManagerComponent().m_IsHoldInteractionActive = false;
             InterfaceManager.GetPanel<Panel_HUD>().CancelItemProgressBar();
         }
 
-        public void UnlockBegin(ref bool canOpen)
+        public void UnlockBegin()
         {
 
             this.m_GearItemUsedToUnlock = this.ChooseGearItemToUnlock();
-
-            MelonLogger.Msg("Gear item used to unlock: {0}", m_GearItemUsedToUnlock);
+            SetDurationToUnlockBasedOnItemUsed();
 
             if (!this.m_GearItemUsedToUnlock)
             {
@@ -237,7 +245,6 @@ namespace MoreLockedDoors.Locks
                 HUDMessage.AddMessage("DEBUG: Item used to unlock doesn't have force unlock item component on it!");
                 return;
             }
-            canOpen = true;
             this.StartInteract();
         }
 
@@ -265,11 +272,12 @@ namespace MoreLockedDoors.Locks
             //check inventory for any of the gear items and returns true if found
 
             GearItem highestConditionGearThatMatchesName = null;
-           
+
             foreach (var giStr in m_ItemsUsedToForceLock)
             {
                 highestConditionGearThatMatchesName = GameManager.GetInventoryComponent().GetHighestConditionGearThatMatchesName(giStr);
-                if (m_ItemsUsedToForceLock.Count > 1 && (giStr.ToLowerInvariant().Contains("key") || giStr.ToLowerInvariant().Contains(selection))) break;
+                if (highestConditionGearThatMatchesName == null) continue;
+                if (m_ItemsUsedToForceLock.Count > 1 && (highestConditionGearThatMatchesName.name.ToLowerInvariant().Contains("key") || highestConditionGearThatMatchesName.name.ToLowerInvariant().Contains(selection))) break;
             }
             return highestConditionGearThatMatchesName;
         }
@@ -277,8 +285,6 @@ namespace MoreLockedDoors.Locks
         {
             //if lock only needs 1 item and player has it, choose that one
             if (m_ItemsUsedToForceLock.Count == 1) return GetRequiredGearToUnlock();
-
-           
 
             //otherwise open selection UI or something else
 
@@ -296,7 +302,6 @@ namespace MoreLockedDoors.Locks
             this.m_IsBeingInteractedWith = true;
             float num = Random.Range(this.m_ForceLockDurationSecondsMin, this.m_ForceLockDurationSecondsMax);
             this.m_InteractionTimer = num;
-            GameManager.GetPlayerManagerComponent().m_IsHoldInteractionActive = true;
             GameManager.GetPlayerManagerComponent().SetControlMode(PlayerControlMode.Locked);
             this.m_RandomFailureTime = 0f;
             if (this.m_GearItemUsedToUnlock.CheckForBreakOnUse())
@@ -322,7 +327,25 @@ namespace MoreLockedDoors.Locks
         public void ProgressBarStarted()
         {
         }
-
+        private void SetDurationToUnlockBasedOnItemUsed()
+        {
+            if (m_GearItemUsedToUnlock == null) return;
+            else if (m_GearItemUsedToUnlock.name.ToLowerInvariant().Contains("key"))
+            {
+                m_ForceLockDurationSecondsMin = 2f;
+                m_ForceLockDurationSecondsMax = 3f;
+            }
+            else if (m_GearItemUsedToUnlock.name.ToLowerInvariant().Contains("hatchet"))
+            {
+                m_ForceLockDurationSecondsMin = 5f;
+                m_ForceLockDurationSecondsMax = 7f;
+            }
+            else if (m_GearItemUsedToUnlock.name.ToLowerInvariant().Contains("hacksaw"))
+            {
+                m_ForceLockDurationSecondsMin = 8f;
+                m_ForceLockDurationSecondsMax = 9f;
+            }
+        }
         private void MaybeGetHoverIcons()
         {
             if (this.m_HoverIcons)
