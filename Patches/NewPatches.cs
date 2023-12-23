@@ -17,7 +17,7 @@ namespace MoreLockedDoors.Patches
 
         [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.PerformHold))]
 
-        public class ForceLock
+        public class ForceLockOnSceneLoadTrigger
         {
 
             public static bool Prefix(LoadScene __instance)
@@ -36,6 +36,27 @@ namespace MoreLockedDoors.Patches
             }
 
         }
+
+        [HarmonyPatch(typeof(OpenClose), nameof(OpenClose.PerformHold))]
+
+        public class ForceLockOnHinge
+        {
+            public static bool Prefix(OpenClose __instance)
+            {
+
+                if (__instance.gameObject.GetComponent<CustomLock>())
+                {
+                    if (__instance.gameObject.GetComponent<CustomLock>().IsLocked())
+                    {
+                        __instance.gameObject.GetComponent<CustomLock>().UnlockBegin();
+                        return false;
+                    }
+                    else return true;
+                }
+                else return true;
+            }
+        }
+
 
         [HarmonyPatch(typeof(Panel_HUD), nameof(Panel_HUD.SetHoverText))]
 

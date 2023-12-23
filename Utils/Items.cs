@@ -14,7 +14,7 @@ namespace MoreLockedDoors.Utils
     {
 
         public static string prybar = "GEAR_Prybar";
-        public static string boltcutters = "GEAR_Boltcutters";
+        public static string boltcutters = "GEAR_BoltCutters";
         public static string hacksaw = "GEAR_Hacksaw";
         public static string hatchet = "GEAR_Hatchet";
 
