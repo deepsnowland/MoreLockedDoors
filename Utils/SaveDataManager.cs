@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using MelonLoader;
 using ModData;
 using MoreLockedDoors.Locks;
+using MoreLockedDoors.GearSpawns;
+using GearSpawner;
 
 namespace MoreLockedDoors.Utils
 {
@@ -33,6 +35,35 @@ namespace MoreLockedDoors.Utils
 
             return sdp;
         }
+
+        public void SaveKeyData(KeySpawnSaveDataProxy data, string keyName)
+        {
+
+            if(data != null)
+            {
+                string dataToSave = JsonSerializer.Serialize<KeySpawnSaveDataProxy>(data);
+                dm.Save(dataToSave, keyName);
+            }
+
+        }
+
+        public KeySpawnSaveDataProxy LoadKeyData(string keyName)
+        {
+
+            string? data = dm.Load(keyName);
+
+            if (data is null)
+            {
+                MelonLogger.Msg("Getting key data but there is nothing saved under the suffix: {0}", keyName);
+                return null;
+            }
+
+            KeySpawnSaveDataProxy sdp = JsonSerializer.Deserialize<KeySpawnSaveDataProxy>(data);
+
+            return sdp;
+        }
+
+        
 
     }
 }
