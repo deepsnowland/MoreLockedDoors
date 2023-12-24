@@ -53,7 +53,6 @@ namespace MoreLockedDoors.Locks
         public void Awake()
         {
             m_GUID = base.GetComponent<ObjectGuid>();
-            MelonLogger.Msg("Awakening... GUID is: {0}", m_GUID.PDID);
             LoadData();
             m_AttemptedToOpen = false;
             MaybeGetHoverIcons();

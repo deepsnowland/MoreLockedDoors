@@ -45,7 +45,7 @@ namespace MoreLockedDoors.Patches
 
         public static void AddMysteryLakeLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "LakeRegion")
+            if (GameManager.m_ActiveScene == "LakeRegion")
             {
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "InteriorLoadTrigger");
@@ -81,7 +81,7 @@ namespace MoreLockedDoors.Patches
                 chance = 70; //this might cause issues
                 lockManager.InitializeCustomLock(damFrontGateObj, ref chance, lockManager.metalChainDoorLockedAudio, "", new List<string> { Items.boltcutters });
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CampOffice")
+            else if (GameManager.m_ActiveScene == "CampOffice")
             {
                 GameObject campOfficeFrontDoor = GameObject.Find(Paths.campOfficeFrontDoorInt);
                 GameObject campOfficeBackDoor = GameObject.Find(Paths.campOfficeBackDoorInt);
@@ -95,7 +95,7 @@ namespace MoreLockedDoors.Patches
         }
         public static void AddMountainTownLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "MountainTownRegion")
+            if (GameManager.m_ActiveScene == "MountainTownRegion")
             {
                 //lock Milton Credit Union
                 GameObject bankFrontDoorObj = GameObject.Find(Paths.bankFrontDoor);
@@ -106,7 +106,7 @@ namespace MoreLockedDoors.Patches
         }
         public static void AddBrokenRailroadLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "TracksRegion")
+            if (GameManager.m_ActiveScene == "TracksRegion")
             {
                 //lock Hunting Lodge fence gate
                 GameObject lodgeGateObj = GameObject.Find(Paths.huntingLodgeGate);
@@ -130,7 +130,7 @@ namespace MoreLockedDoors.Patches
                     i++;
                 }
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "MaintenanceShedA")
+            else if (GameManager.m_ActiveScene == "MaintenanceShedA")
             {
                 //lock Maintenance shed interior doors
 
@@ -155,7 +155,7 @@ namespace MoreLockedDoors.Patches
         }
         public static void AddDesolationPointLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingStationRegion")
+            if (GameManager.m_ActiveScene == "WhalingStationRegion")
             {
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "TransitionContact");
@@ -194,7 +194,7 @@ namespace MoreLockedDoors.Patches
                 lockManager.InitializeCustomLock(hiberniaBackDoor, ref hiberniaChance, lockManager.metalDoorLockedAudio, "61299ab5-b6ac-420a-bbdc-4e4787c7b461", new List<string> { Items.prybar });
 
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingWarehouseA")
+            else if (GameManager.m_ActiveScene == "WhalingWarehouseA")
             {
 
                 //Lock interior Hibernia doors
@@ -207,7 +207,7 @@ namespace MoreLockedDoors.Patches
                 lockManager.InitializeCustomLock(hiberniaBackDoor, ref hiberniaChance, lockManager.metalDoorLockedAudio, "ed87b39e-addb-457a-8abf-81d7bfa4a97e", new List<string> { Items.prybar });
 
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "WhalingMine")
+            else if (GameManager.m_ActiveScene == "WhalingMine")
             {
 
                 //Lock Mine 5 interior doors
@@ -223,7 +223,7 @@ namespace MoreLockedDoors.Patches
         }
         public static void AddCoastalHighwayLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CoastalRegion")
+            if (GameManager.m_ActiveScene == "CoastalRegion")
             {
 
                 //Get door objects
@@ -273,7 +273,7 @@ namespace MoreLockedDoors.Patches
                 }
 
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "QuonsetGasStation")
+            else if (GameManager.m_ActiveScene == "QuonsetGasStation")
             {
                 //Lock quonset interior door
                 GameObject quonsetFrontDoor = GameObject.Find(Paths.quonsetGasStationInteriorFrontDoor);
@@ -287,7 +287,7 @@ namespace MoreLockedDoors.Patches
         }
         public static void AddCinderHillsCoalMineLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "MineTransitionZone")
+            if (GameManager.m_ActiveScene == "MineTransitionZone")
             {
                 //Lock mine exits to CH and PV
                 GameObject cinderHillsCoalMineDoorCH = GameObject.Find(Paths.cinderHillsCoalMineInteriorDoorCH);
@@ -297,7 +297,7 @@ namespace MoreLockedDoors.Patches
         }
         public static void AddPleasantValleyLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RuralRegion")
+            if (GameManager.m_ActiveScene == "RuralRegion")
             {
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "InteriorLoadTrigger");
@@ -398,8 +398,13 @@ namespace MoreLockedDoors.Patches
                 GameObject signalHillDoor = GameObject.Find(Paths.signalHillDoor);
                 int signalHillChance = 80;
                 lockManager.InitializeCustomLock(signalHillDoor, ref signalHillChance, lockManager.metalDoorLockedAudio, "", new List<string> { Items.prybar });
+
+                //lock Barnhouse
+                GameObject barnhouseDoor = GameObject.Find(Paths.barnhouseDoorExt);
+                int barnhouseLockChance = 40;
+                lockManager.InitializeCustomLock(barnhouseDoor, ref barnhouseLockChance, lockManager.woodDoorLockedAudio, "", new List<string> { Items.hatchet });
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RuralStoreA")
+            else if (GameManager.m_ActiveScene == "RuralStoreA")
             {
 
                 //Lock Rural store interior
@@ -412,7 +417,7 @@ namespace MoreLockedDoors.Patches
                 lockManager.InitializeCustomLock(ruralStoreBackDoor, ref chance, lockManager.woodDoorLockedAudio, "30ce35d1-f08b-43e4-abdd-c8f226352afc", new List<string> { Items.prybar });
 
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CommunityHallA")
+            else if (GameManager.m_ActiveScene == "CommunityHallA")
             {
 
                 GameObject communityHallFrontDoorInt = GameObject.Find(Paths.communityHallFrontDoorInt);
@@ -423,7 +428,7 @@ namespace MoreLockedDoors.Patches
                 lockManager.InitializeCustomLock(communityHallFrontDoorInt, ref chance, lockManager.woodDoorLockedAudio, "a30c0c66-7117-4359-bcad-f7b75ea1ccaf", new List<string> { Items.communityHallKey });
                 lockManager.InitializeCustomLock(communityHallBackDoorInt, ref chance, lockManager.woodDoorLockedAudio, "87d6326a-f32b-4e87-968e-39b48d9e1a3f", new List<string> { Items.communityHallKey });
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmHouseA")
+            else if (GameManager.m_ActiveScene == "FarmHouseA")
             {
 
                 var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "ExteriorLoadTrigger");
@@ -465,7 +470,7 @@ namespace MoreLockedDoors.Patches
                 }
 
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FarmHouseABasement")
+            else if (GameManager.m_ActiveScene == "FarmHouseABasement")
             {
 
                 GameObject basementDoorBasement = GameObject.Find(Paths.farmhouseBasementDoorBasement);
@@ -478,10 +483,16 @@ namespace MoreLockedDoors.Patches
                 lockManager.InitializeCustomLock(farmhouseCellarDoorInt, ref cellarChance, lockManager.metalDoorLockedAudio, "ee96b557-caa7-4d96-89d3-79ebc406b8b5", new List<string> { Items.prybar });
 
             }
+            else if(GameManager.m_ActiveScene == "BarnHouseB")
+            {
+                GameObject barnhouseDoorInt = GameObject.Find(Paths.barnhouseDoorInt);
+                int chance = 40;
+                lockManager.InitializeCustomLock(barnhouseDoorInt, ref chance, lockManager.woodDoorLockedAudio, "", new List<string> { Items.hatchet });
+            }
         }
         public static void AddBlackrockLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BlackrockRegion")
+            if (GameManager.m_ActiveScene == "BlackrockRegion")
             {
 
                 int chance = 60;
@@ -489,7 +500,7 @@ namespace MoreLockedDoors.Patches
                 GameObject substationDoor = GameObject.Find(Paths.huntingLodgeGate);
                 lockManager.InitializeCustomLock(substationDoor, ref chance, lockManager.metalDoorLockedAudio, "f4bc3103-7108-4d80-9b0d-2e83864983c7", new List<string> { Items.prybar });
             }
-            else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "RadioControlHutC")
+            else if (GameManager.m_ActiveScene == "RadioControlHutC")
             {
                 int chance = 0;
 
@@ -499,7 +510,7 @@ namespace MoreLockedDoors.Patches
         } 
         public static void AddAshCanyonLocks()
         {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "AshCanyonRegion")
+            if (GameManager.m_ActiveScene == "AshCanyonRegion")
             {
                 GameObject anglersDenDoorExt = GameObject.Find(Paths.anglersDenDoorExt);
                 int chance = 60;

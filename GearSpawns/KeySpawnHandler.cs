@@ -40,12 +40,10 @@ namespace MoreLockedDoors.GearSpawns
 
                         if (ItemSpawnManager.AreGearSpawnInfosEqual(gsi, gearSpawnInfo))
                         {
-                            MelonLogger.Msg("Spawning key!");
                             return true;
                         }
                         else
                         {
-                            MelonLogger.Error("Gear spawn info doesn't match randomly chosen gear spawn.");
                             return false;
                         }
                     }
@@ -53,7 +51,6 @@ namespace MoreLockedDoors.GearSpawns
                 }
                 else
                 {
-                    MelonLogger.Error("No data found for key");
                     return false;
                 }
 

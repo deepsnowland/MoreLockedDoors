@@ -27,7 +27,6 @@ namespace MoreLockedDoors.GearSpawns
 
             if (sdm.LoadKeyData(keyName) != null)
             {
-                MelonLogger.Msg("Found key data. Keeping it.");
                 return;
             }
 
@@ -37,93 +36,82 @@ namespace MoreLockedDoors.GearSpawns
             string rawSpawnTextData = GearSpawnerOverrides.ReadRawDataFromGearSpawnFile("keys");
             string[] rawLines = GearSpawnerOverrides.ParseInformationToLines(rawSpawnTextData);
 
-            KeySpawnSaveDataProxy sdp = null;
 
             if (keyName == "GEAR_MoreLockedDoors_ML_CampOfficeKey")
             {
-                int indoorOutdoorChoice = random.Next(3);
+                int campOfficeKeySpawnChoice = random.Next(3);
 
-                MelonLogger.Msg("Choice: {0}", indoorOutdoorChoice);
-
-                if (indoorOutdoorChoice == 0)
+                if (campOfficeKeySpawnChoice == 0)
                 {
                     sceneName = "LakeRegion";
                 }
-                else if (indoorOutdoorChoice == 1)
+                else if (campOfficeKeySpawnChoice == 1)
                 {
-                    sceneName = "LakeCabinB"; 
+                    sceneName = "LakeCabinB";
                 }
-                else if (indoorOutdoorChoice == 2)
+                else if (campOfficeKeySpawnChoice == 2)
                 {
-                    sceneName = "LakeCabinE"; 
+                    sceneName = "LakeCabinE";
                 }
             }
-            else if(keyName == "GEAR_MoreLockedDoors_PV_CommunityHallKey" || keyName == "GEAR_MoreLockedDoors_PV_FarmKey")
+            else if (keyName == "GEAR_MoreLockedDoors_PV_CommunityHallKey")
             {
-                //int indoorOutdoorChoice = random.Next(3);
+                int communityHallKeySpawnChoice = random.Next(2);
 
-                int indoorOutdoorChoice = 0;
-
-                if (indoorOutdoorChoice == 0)
+                if (communityHallKeySpawnChoice == 0)
                 {
                     sceneName = "RuralRegion";
                 }
-                else if (indoorOutdoorChoice == 1)
+                else if (communityHallKeySpawnChoice == 1)
                 {
-                    sceneName = ""; 
+                    sceneName = "ChurchC";
                 }
-                else if (indoorOutdoorChoice == 2)
+            }
+            else if (keyName == "GEAR_MoreLockedDoors_PV_FarmKey")
+            {
+                int farmhouseKeySpawnChoice = random.Next(3);
+
+                if (farmhouseKeySpawnChoice == 0)
                 {
-                    sceneName = ""; 
+                    sceneName = "RuralRegion";
+                }
+                else if (farmhouseKeySpawnChoice == 1)
+                {
+                    sceneName = "BarnHouseB";
+                }
+                else if (farmhouseKeySpawnChoice == 2)
+                {
+                    sceneName = "FarmHouseABasement";
                 }
             }
             else if (keyName == "GEAR_MoreLockedDoors_CH_FishingCabinKey")
             {
-                //int indoorOutdoorChoice = random.Next(3);
+                int fishingCabinKeySpawnChoice = random.Next(2);
 
-                int indoorOutdoorChoice = 0;
-
-                if (indoorOutdoorChoice == 0)
+                if (fishingCabinKeySpawnChoice == 0)
                 {
                     sceneName = "CoastalRegion";
                 }
-                else if (indoorOutdoorChoice == 1)
+                else if (fishingCabinKeySpawnChoice == 1)
                 {
-                    sceneName = ""; 
-                }
-                else if (indoorOutdoorChoice == 2)
-                {
-                    sceneName = "";
+                    sceneName = "FishingCabinC";
                 }
             }
             else if (keyName == "GEAR_MoreLockedDoors_AC_AnglersDenKey")
             {
-                //int indoorOutdoorChoice = random.Next(3);
-
-                int indoorOutdoorChoice = 0;
-
-                if (indoorOutdoorChoice == 0)
-                {
-                    sceneName = "AshCanyonRegion";
-                }
-                else if (indoorOutdoorChoice == 1)
-                {
-                    sceneName = ""; 
-                }
-                else if (indoorOutdoorChoice == 2)
-                {
-                    sceneName = ""; 
-                }
+                sceneName = "AshCanyonRegion";
             }
 
             List<GearSpawnInfo> list = GearSpawnerOverrides.GetListOfGearSpawnInfos(rawLines, sceneName);
             int spawnChoice = random.Next(0, list.Count - 1);
 
+            MelonLogger.Msg("Chosen scene: {0}", sceneName);
+
             GearSpawnInfo chosen = list[spawnChoice];
             Vector3Ser pos = new Vector3Ser(chosen.Position);
             QuaternionSer rot = new QuaternionSer(chosen.Rotation);
             CustomGearSpawnInfo cgsi = new CustomGearSpawnInfo(chosen.Tag, pos, chosen.PrefabName, rot, chosen.SpawnChance);
-            sdp = new KeySpawnSaveDataProxy(sceneName, cgsi);
+            KeySpawnSaveDataProxy sdp = new KeySpawnSaveDataProxy(sceneName, cgsi);
             sdm.SaveKeyData(sdp, keyName);
 
         }
