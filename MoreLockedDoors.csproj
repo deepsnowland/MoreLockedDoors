@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Utils\GearSpawns.txt" />
+	  <EmbeddedResource Include="morelockeddoors\gear-spawns\keys.txt" />
 	</ItemGroup>
 
 

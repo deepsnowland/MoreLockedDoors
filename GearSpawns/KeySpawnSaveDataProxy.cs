@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Il2Cpp;
 using GearSpawner;
+using MoreLockedDoors.GearSpawns.CustomHelperClasses;
 
 
 namespace MoreLockedDoors.GearSpawns
@@ -13,9 +14,10 @@ namespace MoreLockedDoors.GearSpawns
     {
 
         public string sceneName { get; set; }
-        public GearSpawnInfo gsi { get; set; }
 
-        public KeySpawnSaveDataProxy(string sceneName, GearSpawnInfo gsi)
+        public CustomGearSpawnInfo gsi { get; set; }
+
+        public KeySpawnSaveDataProxy(string sceneName, CustomGearSpawnInfo gsi)
         {
             this.sceneName = sceneName;
             this.gsi = gsi;

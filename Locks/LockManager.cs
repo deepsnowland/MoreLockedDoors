@@ -23,9 +23,6 @@ namespace MoreLockedDoors.Locks
 
         public void InitializeCustomLock(GameObject targetObj, ref int lockChance, string audio, string pair, List<string> tools)
         {
-
-            MelonLogger.Msg("Items to unlock count: {0}", tools.Count);
-
             if (targetObj == null)
             {
                 MelonLogger.Msg("Object is null");

@@ -25,12 +25,8 @@ namespace MoreLockedDoors.Utils
         {
             string? data = dm.Load(suffix);
 
-            if (data is null)
-            {
-                MelonLogger.Msg("Getting lock data but there is nothing saved under the suffix: {0}", suffix);
-                return null;
-            }
-
+            if (data is null) return null;
+            
             CustomLockSaveDataProxy sdp = JsonSerializer.Deserialize<CustomLockSaveDataProxy>(data);
 
             return sdp;
@@ -52,12 +48,8 @@ namespace MoreLockedDoors.Utils
 
             string? data = dm.Load(keyName);
 
-            if (data is null)
-            {
-                MelonLogger.Msg("Getting key data but there is nothing saved under the suffix: {0}", keyName);
-                return null;
-            }
-
+            if (data is null) return null;
+           
             KeySpawnSaveDataProxy sdp = JsonSerializer.Deserialize<KeySpawnSaveDataProxy>(data);
 
             return sdp;

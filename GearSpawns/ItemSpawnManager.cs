@@ -8,6 +8,7 @@ using System.Reflection;
 using GearSpawner;
 using Il2CppNodeCanvas.Tasks.Actions;
 using MoreLockedDoors.Utils;
+using MoreLockedDoors.GearSpawns.CustomHelperClasses;
 
 namespace MoreLockedDoors.GearSpawns
 {
@@ -17,7 +18,6 @@ namespace MoreLockedDoors.GearSpawns
         {
             SpawnTagManager.AddHandler("morelockeddoors_randomunlockitems", new OneGuaranteedItemSpawnHandler());
             SpawnTagManager.AddHandler("morelockeddoors_randomkeys", new KeySpawnHandler());
-            //SpawnTagManager.AddHandler("morelockeddoors_farmhousekey", new OneGuaranteedItemSpawnHandler());
         }
 
         public static void ChooseSpawnLocationForKey(string keyName)
@@ -25,7 +25,11 @@ namespace MoreLockedDoors.GearSpawns
 
             SaveDataManager sdm = Implementation.sdm;
 
-            if (sdm.LoadKeyData(keyName) != null) return;
+            if (sdm.LoadKeyData(keyName) != null)
+            {
+                MelonLogger.Msg("Found key data. Keeping it.");
+                return;
+            }
 
             Random random = new Random();
             string sceneName = "";
@@ -37,9 +41,9 @@ namespace MoreLockedDoors.GearSpawns
 
             if (keyName == "GEAR_MoreLockedDoors_ML_CampOfficeKey")
             {
-                //int indoorOutdoorChoice = random.Next(3);
+                int indoorOutdoorChoice = random.Next(3);
 
-                int indoorOutdoorChoice = 0;
+                MelonLogger.Msg("Choice: {0}", indoorOutdoorChoice);
 
                 if (indoorOutdoorChoice == 0)
                 {
@@ -47,11 +51,11 @@ namespace MoreLockedDoors.GearSpawns
                 }
                 else if (indoorOutdoorChoice == 1)
                 {
-                    sceneName = ""; //lone lake cabin
+                    sceneName = "LakeCabinB"; 
                 }
                 else if (indoorOutdoorChoice == 2)
                 {
-                    sceneName = ""; //lake cabin whatever
+                    sceneName = "LakeCabinE"; 
                 }
             }
             else if(keyName == "GEAR_MoreLockedDoors_PV_CommunityHallKey" || keyName == "GEAR_MoreLockedDoors_PV_FarmKey")
@@ -66,11 +70,11 @@ namespace MoreLockedDoors.GearSpawns
                 }
                 else if (indoorOutdoorChoice == 1)
                 {
-                    sceneName = ""; //lone lake cabin
+                    sceneName = ""; 
                 }
                 else if (indoorOutdoorChoice == 2)
                 {
-                    sceneName = ""; //lake cabin whatever
+                    sceneName = ""; 
                 }
             }
             else if (keyName == "GEAR_MoreLockedDoors_CH_FishingCabinKey")
@@ -85,11 +89,11 @@ namespace MoreLockedDoors.GearSpawns
                 }
                 else if (indoorOutdoorChoice == 1)
                 {
-                    sceneName = ""; //lone lake cabin
+                    sceneName = ""; 
                 }
                 else if (indoorOutdoorChoice == 2)
                 {
-                    sceneName = ""; //lake cabin whatever
+                    sceneName = "";
                 }
             }
             else if (keyName == "GEAR_MoreLockedDoors_AC_AnglersDenKey")
@@ -104,17 +108,22 @@ namespace MoreLockedDoors.GearSpawns
                 }
                 else if (indoorOutdoorChoice == 1)
                 {
-                    sceneName = ""; //lone lake cabin
+                    sceneName = ""; 
                 }
                 else if (indoorOutdoorChoice == 2)
                 {
-                    sceneName = ""; //lake cabin whatever
+                    sceneName = ""; 
                 }
             }
 
             List<GearSpawnInfo> list = GearSpawnerOverrides.GetListOfGearSpawnInfos(rawLines, sceneName);
             int spawnChoice = random.Next(0, list.Count - 1);
-            sdp = new KeySpawnSaveDataProxy(sceneName, list[spawnChoice]);
+
+            GearSpawnInfo chosen = list[spawnChoice];
+            Vector3Ser pos = new Vector3Ser(chosen.Position);
+            QuaternionSer rot = new QuaternionSer(chosen.Rotation);
+            CustomGearSpawnInfo cgsi = new CustomGearSpawnInfo(chosen.Tag, pos, chosen.PrefabName, rot, chosen.SpawnChance);
+            sdp = new KeySpawnSaveDataProxy(sceneName, cgsi);
             sdm.SaveKeyData(sdp, keyName);
 
         }

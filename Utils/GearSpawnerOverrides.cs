@@ -9,6 +9,7 @@ using UnityEngine;
 using MelonLoader;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Reflection;
 
 
 namespace MoreLockedDoors.Utils
@@ -34,28 +35,29 @@ namespace MoreLockedDoors.Utils
 
         public static string ReadRawDataFromGearSpawnFile(string fileName)
         {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string resourceName = "MoreLockedDoors.morelockeddoors.gear_spawns." + fileName + ".txt";
+            string fileContents;
 
-            string filePath = "../morelockeddoors/gear-spawns/"+fileName+".txt";
-            string fileContent = "";
-            try
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
-                // Check if the file exists
-                if (File.Exists(filePath))
+                if (stream == null)
                 {
-                    // Read the entire file into a string
-                    fileContent = File.ReadAllText(filePath);
+                    Console.WriteLine($"Resource '{resourceName}' not found.");
+                    return "";
                 }
-                else
+
+                using (StreamReader reader = new StreamReader(stream))
                 {
-                    MelonLogger.Error("The specified file does not exist.");
+                    // Read the contents of the file
+                    fileContents = reader.ReadToEnd();
                 }
             }
-            catch (Exception ex)
-            {
-                MelonLogger.Error($"An error occurred: {ex.Message}");
-            }
 
-            return fileContent;
+
+           
+
+            return fileContents;
         }
 
         public static string[] ParseInformationToLines(string text)
