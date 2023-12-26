@@ -66,7 +66,7 @@ namespace MoreLockedDoors.Utils
             return lines;
         }
 
-        public static List<GearSpawnInfo> GetListOfGearSpawnInfos(string[] lines, string sceneName)
+        public static List<GearSpawnInfo> GetListOfGearSpawnInfos(string[] lines, string sceneName, bool noSceneCheck = false)
         {
 
             string? scene = null;
@@ -113,10 +113,18 @@ namespace MoreLockedDoors.Utils
                         Tag = tag
                     };
 
-                    if (scene == sceneName) 
-                    {
-                        listToReturn.Add(info);
-                    }
+                        if (noSceneCheck)
+                        {
+                            listToReturn.Add(info);
+                        }
+                        else
+                        {
+                            if (scene == sceneName)
+                            {
+                                listToReturn.Add(info);
+                            }
+                        }
+                        
 
                     continue;
                 }

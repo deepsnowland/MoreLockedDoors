@@ -9,6 +9,8 @@ using GearSpawner;
 using Il2CppNodeCanvas.Tasks.Actions;
 using MoreLockedDoors.Utils;
 using MoreLockedDoors.GearSpawns.CustomHelperClasses;
+using UnityEngine;
+using Random = System.Random;
 
 namespace MoreLockedDoors.GearSpawns
 {
@@ -16,8 +18,9 @@ namespace MoreLockedDoors.GearSpawns
     {
         public static void InitializeCustomHandler()
         {
-            SpawnTagManager.AddHandler("morelockeddoors_randomunlockitems", new OneGuaranteedItemSpawnHandler());
             SpawnTagManager.AddHandler("morelockeddoors_randomkeys", new KeySpawnHandler());
+            SpawnTagManager.AddHandler("morelockeddoors_boltcutters", new ToolSpawnHandler());
+
         }
 
         public static void ChooseSpawnLocationForKey(string keyName)
@@ -111,9 +114,51 @@ namespace MoreLockedDoors.GearSpawns
             Vector3Ser pos = new Vector3Ser(chosen.Position);
             QuaternionSer rot = new QuaternionSer(chosen.Rotation);
             CustomGearSpawnInfo cgsi = new CustomGearSpawnInfo(chosen.Tag, pos, chosen.PrefabName, rot, chosen.SpawnChance);
-            KeySpawnSaveDataProxy sdp = new KeySpawnSaveDataProxy(sceneName, cgsi);
+            SpawnSaveDataProxy sdp = new SpawnSaveDataProxy(sceneName, cgsi);
             sdm.SaveKeyData(sdp, keyName);
 
+        }
+
+        public static void ChooseSpawnLocationsForBoltcutters()
+        {
+            SaveDataManager sdm = Implementation.sdm;
+
+            if (sdm.LoadKeyData("boltcutters") != null)
+            {
+                MelonLogger.Msg("List of boltcutters spawns already determined.");
+                return;
+            }
+            else
+            {
+                MelonLogger.Msg("List of boltcutters spawns not yet determined.");
+            }
+
+            Random random = new Random();
+            string sceneName = "";
+
+            string rawSpawnTextData = GearSpawnerOverrides.ReadRawDataFromGearSpawnFile("tools");
+            string[] rawLines = GearSpawnerOverrides.ParseInformationToLines(rawSpawnTextData);
+
+            List<GearSpawnInfo> list = GearSpawnerOverrides.GetListOfGearSpawnInfos(rawLines, sceneName, true);
+            List<SpawnSaveDataProxy> listToSave = new List<SpawnSaveDataProxy>();
+
+            foreach (GearSpawnInfo gsi in list)
+            {
+                Vector3Ser pos = new Vector3Ser(gsi.Position);
+                QuaternionSer rot = new QuaternionSer(gsi.Rotation);
+                CustomGearSpawnInfo cgsi = new CustomGearSpawnInfo(gsi.Tag, pos, gsi.PrefabName, rot, gsi.SpawnChance);
+                SpawnSaveDataProxy sdp = new SpawnSaveDataProxy(sceneName, cgsi);
+                listToSave.Add(sdp);
+            }
+
+            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+            int count = random.Next(listToSave.Count / 2, listToSave.Count);
+
+            RandomlyRemoveElements(listToSave, count);
+            listToSave = RemoveMultipleSpawnsPerScene(listToSave, e => e.sceneName);
+
+            sdm.SaveBoltcuttersList(listToSave);
         }
 
         public static bool AreGearSpawnInfosEqual(GearSpawnInfo gsi1, GearSpawnInfo gsi2)
@@ -139,6 +184,52 @@ namespace MoreLockedDoors.GearSpawns
             }
 
             return true;
+        }
+
+        static void RandomlyRemoveElements<T>(List<T> list, int count)
+        {
+            if (count >= list.Count)
+            {
+                // If count is greater than or equal to the list size,
+                // clear the list to remove all elements.
+                list.Clear();
+            }
+            else
+            {
+                Random random = new Random();
+
+                for (int i = 0; i < count; i++)
+                {
+                    // Generate a random index within the list range
+                    int indexToRemove = random.Next(0, list.Count);
+
+                    // Remove the element at the randomly generated index
+                    list.RemoveAt(indexToRemove);
+                }
+            }
+        }
+
+        static List<T> RemoveMultipleSpawnsPerScene<T>(List<T> list, Func<T, string> sceneSelector)
+        {
+
+            HashSet<string> uniqueValues = new HashSet<string>();
+            List<T> uniqueList = new List<T>();
+
+            foreach (var e in list)
+            {
+
+                string sceneValue = sceneSelector(e);
+
+                if (!uniqueValues.Add(sceneValue))
+                {
+                    continue;
+                }
+
+                uniqueList.Add(e);
+            }
+
+            return uniqueList;
+
         }
     }
 }

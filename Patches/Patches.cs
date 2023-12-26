@@ -559,8 +559,6 @@ namespace MoreLockedDoors.Patches
                     comp.m_ForceLockAudio = "PLAY_HARVESTINGWOODRECLAIMED";
                     comp.m_LocalizedProgressText = progressText;
                 }
-
-               
             }
 
         }

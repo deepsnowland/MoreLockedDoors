@@ -9,6 +9,7 @@ using ModData;
 using MoreLockedDoors.Locks;
 using MoreLockedDoors.GearSpawns;
 using GearSpawner;
+using UnityEngine;
 
 namespace MoreLockedDoors.Utils
 {
@@ -32,30 +33,49 @@ namespace MoreLockedDoors.Utils
             return sdp;
         }
 
-        public void SaveKeyData(KeySpawnSaveDataProxy data, string keyName)
+        public void SaveKeyData(SpawnSaveDataProxy data, string keyName)
         {
 
             if(data != null)
             {
-                string dataToSave = JsonSerializer.Serialize<KeySpawnSaveDataProxy>(data);
+                string dataToSave = JsonSerializer.Serialize<SpawnSaveDataProxy>(data);
                 dm.Save(dataToSave, keyName);
             }
 
         }
 
-        public KeySpawnSaveDataProxy LoadKeyData(string keyName)
+        public SpawnSaveDataProxy LoadKeyData(string keyName)
         {
 
             string? data = dm.Load(keyName);
 
             if (data is null) return null;
            
-            KeySpawnSaveDataProxy sdp = JsonSerializer.Deserialize<KeySpawnSaveDataProxy>(data);
+            SpawnSaveDataProxy sdp = JsonSerializer.Deserialize<SpawnSaveDataProxy>(data);
 
             return sdp;
         }
 
-        
+        public void SaveBoltcuttersList(List<SpawnSaveDataProxy> data)
+        {
+            if (data != null)
+            {
+                string dataToSave = JsonSerializer.Serialize<List<SpawnSaveDataProxy>>(data);
+                dm.Save(dataToSave, "boltcutters");
+            }
+        }
+
+        public List<SpawnSaveDataProxy> LoadBoltcuttersList()
+        {
+            string? data = dm.Load("boltcutters");
+
+            if (data is null) return null;
+
+            List<SpawnSaveDataProxy> list = JsonSerializer.Deserialize<List<SpawnSaveDataProxy>>(data);
+
+            return list;
+        }
+
 
     }
 }

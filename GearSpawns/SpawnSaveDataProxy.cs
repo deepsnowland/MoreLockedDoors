@@ -10,20 +10,20 @@ using MoreLockedDoors.GearSpawns.CustomHelperClasses;
 
 namespace MoreLockedDoors.GearSpawns
 {
-    internal class KeySpawnSaveDataProxy
+    internal class SpawnSaveDataProxy
     {
 
         public string sceneName { get; set; }
 
         public CustomGearSpawnInfo gsi { get; set; }
 
-        public KeySpawnSaveDataProxy(string sceneName, CustomGearSpawnInfo gsi)
+        public SpawnSaveDataProxy(string sceneName, CustomGearSpawnInfo gsi)
         {
             this.sceneName = sceneName;
             this.gsi = gsi;
         }
 
-        public KeySpawnSaveDataProxy()
+        public SpawnSaveDataProxy()
         {
         }
     }

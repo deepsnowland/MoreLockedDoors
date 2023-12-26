@@ -12,28 +12,29 @@ using UnityEngine;
 
 namespace MoreLockedDoors.GearSpawns
 {
-    internal class KeySpawnHandler : GearSpawnHandler
+    internal class ToolSpawnHandler : GearSpawnHandler
     {
 
         public override bool ShouldSpawn(DifficultyLevel difficultyLevel, FirearmAvailability firearmAvailability, GearSpawnInfo gearSpawnInfo)
         {
-            if (gearSpawnInfo.PrefabName.ToLowerInvariant().Contains("key"))
+            if (gearSpawnInfo.PrefabName.ToLowerInvariant().Contains("boltcutters"))
             {
-                //this should only be called once per scene, since if it finds data is saved it returns. Otherwise it saves data.
-                ItemSpawnManager.ChooseSpawnLocationForKey(gearSpawnInfo.PrefabName);
+                //this should only be called once 
+                ItemSpawnManager.ChooseSpawnLocationsForBoltcutters();
 
                 string scene = GameManager.m_ActiveScene;
 
                 SaveDataManager sdm = Implementation.sdm;
 
-                SpawnSaveDataProxy sdp = sdm.LoadKeyData(gearSpawnInfo.PrefabName);
+                List<SpawnSaveDataProxy> list = sdm.LoadBoltcuttersList();
 
-                if (sdp != null)
+                if (list != null)
                 {
-                    if (sdp.sceneName == scene)
+                    foreach(SpawnSaveDataProxy sp in list)
                     {
+                        if (sp.sceneName != scene) continue;
 
-                        CustomGearSpawnInfo cgsi = sdp.gsi;
+                        CustomGearSpawnInfo cgsi = sp.gsi;
                         Vector3 pos = new Vector3(cgsi.Position.x, cgsi.Position.y, cgsi.Position.z);
                         Quaternion rot = new Quaternion(cgsi.Rotation.x, cgsi.Rotation.y, cgsi.Rotation.z, cgsi.Rotation.w);
                         GearSpawnInfo gsi = new GearSpawnInfo(cgsi.Tag, pos, cgsi.PrefabName, rot, cgsi.SpawnChance);
@@ -42,19 +43,15 @@ namespace MoreLockedDoors.GearSpawns
                         {
                             return true;
                         }
-                        else
-                        {
-                            return false;
-                        }
                     }
-                    else return false;
+
+                    //if you have not returned true at this point, then the item spawn has not been found in the list which means it shouldn't spawn
+                    return false;
                 }
                 else
                 {
                     return false;
                 }
-
-
             }
             else return false;
         }
