@@ -70,6 +70,10 @@ namespace MoreLockedDoors.Utils
         //e62f85fd-edc9-4aaf-ae59-7b893b06abe9
         public const string farmhouseCellarDoorInt = "Root/Design/Scripting/FarmHouseABasementInteriorExit";
 
+        public const string barnhouseDoorInt = "Root/Design/Scripting/ExteriorLoadTrigger";
+        public const string barnhouseDoorExt = "Art/Structures_Group/SouthFarmLands/STR_BarnSmallA_Exterior_Prefab/Tech/InteriorLoadTrigger";
+
+
         //Desolation Point
 
         //8497788f-28d1-4a17-baab-f3a6b98100f2

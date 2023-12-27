@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using MelonLoader;
 using ModData;
+using MoreLockedDoors.Locks;
+using MoreLockedDoors.GearSpawns;
+using GearSpawner;
+using UnityEngine;
 
 namespace MoreLockedDoors.Utils
 {
@@ -16,12 +22,61 @@ namespace MoreLockedDoors.Utils
             dm.Save(data, suffix);
         }
 
-        public string LoadLockData(string suffix)
+        public CustomLockSaveDataProxy LoadLockData(string suffix)
         {
-            string? lockState = dm.Load(suffix);
+            string? data = dm.Load(suffix);
 
-            return lockState;
+            if (data is null) return null;
+            
+            CustomLockSaveDataProxy sdp = JsonSerializer.Deserialize<CustomLockSaveDataProxy>(data);
+
+            return sdp;
         }
+
+        public void SaveKeyData(SpawnSaveDataProxy data, string keyName)
+        {
+
+            if(data != null)
+            {
+                string dataToSave = JsonSerializer.Serialize<SpawnSaveDataProxy>(data);
+                dm.Save(dataToSave, keyName);
+            }
+
+        }
+
+        public SpawnSaveDataProxy LoadKeyData(string keyName)
+        {
+
+            string? data = dm.Load(keyName);
+
+            if (data is null) return null;
+           
+            SpawnSaveDataProxy sdp = JsonSerializer.Deserialize<SpawnSaveDataProxy>(data);
+
+            return sdp;
+        }
+
+        public void SaveBoltcuttersList(List<SpawnSaveDataProxy> data)
+        {
+            if (data != null)
+            {
+                MelonLogger.Msg("Saving list");
+                string dataToSave = JsonSerializer.Serialize<List<SpawnSaveDataProxy>>(data);
+                dm.Save(dataToSave, "boltcutters");
+            }
+        }
+
+        public List<SpawnSaveDataProxy> LoadBoltcuttersList()
+        {
+            string? data = dm.Load("boltcutters");
+
+            if (data is null) return null;
+
+            List<SpawnSaveDataProxy> list = JsonSerializer.Deserialize<List<SpawnSaveDataProxy>>(data);
+
+            return list;
+        }
+
 
     }
 }
