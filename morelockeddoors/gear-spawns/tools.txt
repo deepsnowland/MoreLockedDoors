@@ -1,8 +1,6 @@
-﻿tag=morelockeddoors_boltcutters
-
+tag=morelockeddoors_boltcutters
 
 #Mystery Lake
-
 scene=LakeRegion
 item=GEAR_BoltCutters p=1631.1387,38.2559,1271.4733 r=0.8331,297.0377,2.7035 c=100
 item=GEAR_BoltCutters p=920.3998,21.7581,1246.3171 r=8.6277,267.3414,78.1523 c=100
@@ -15,11 +13,10 @@ scene=DamRiverTransitionZoneB
 item=GEAR_BoltCutters p=504.0244,89.4779,264.3570 r=0.0000,81.3511,75.0000 c=100
 
 #Pleasant Valley
-
 scene=RuralRegion
-item=GEAR_BoltCutters p=1910.9955,200.8922,645.7029 r=50.3083,269.2589,94.7239 c=100 #signal hill
-item=GEAR_BoltCutters p=2649.7876,198.5691,2767.1028 r=9.4130,351.6968,5.9473 c=100 #mine
-item=GEAR_BoltCutters p=587.1931,153.3049,1783.7423 r=29.6089,303.4533,24.7135 c=100 #plane crash
+item=GEAR_BoltCutters p=1910.9955,200.8922,645.7029 r=50.3083,269.2589,94.7239 c=100 
+item=GEAR_BoltCutters p=2649.7876,198.5691,2767.1028 r=9.4130,351.6968,5.9473 c=100 
+item=GEAR_BoltCutters p=587.1931,153.3049,1783.7423 r=29.6089,303.4533,24.7135 c=100 
 
 scene=RadioControlHut
 item=GEAR_BoltCutters p=3.6238,0.3700,-3.5601 r=0.0000,8.7639,105.0002 c=100
@@ -29,7 +26,6 @@ scene=FarmHouseABasement
 item=GEAR_BoltCutters p=-4.9984,1.1593,-0.0028 r=0.0000,7.1496,75.0000 c=100
 
 #Broken Railroad
-
 scene=TracksRegion
 item=GEAR_BoltCutters p=529.1318,200.6574,547.7302 r=355.4361,225.7442,343.2997 c=100
 item=GEAR_BoltCutters p=578.5941,198.9500,561.9451 r=0.0000,255.6129,0.0000 c=100
@@ -46,13 +42,11 @@ item=GEAR_BoltCutters p=-3.2991,1.1426,-26.5333 r=0.0001,249.7639,-0.0000 c=100
 item=GEAR_BoltCutters p=-3.5773,-0.3692,-5.1073 r=0.0000,216.7090,75.0000 c=100
 
 #Muskeg
-
 scene=MarshRegion
 item=GEAR_BoltCutters p=700.4304,-18.6498,1487.8354 r=0.0000,298.4512,11.4827 c=100
 item=GEAR_BoltCutters p=104.9728,-91.8847,234.5324 r=358.2108,119.3103,1.7901 c=100
 
 #Coastal Highway
-
 scene=CoastalRegion
 item=GEAR_BoltCutters p=780.9253,25.0597,652.7479 r=2.1969,224.4280,6.6075 c=100
 item=GEAR_BoltCutters p=759.5016,24.8520,652.7831 r=0.7325,69.1952,6.6074 c=100
@@ -66,7 +60,6 @@ item=GEAR_BoltCutters p=4.5400,0.1600,5.1142 r=-0.0000,78.2697,-0.0000 c=100
 item=GEAR_BoltCutters p=1.7940,1.3350,7.4305 r=0.0000,324.6533,0.0000 c=100
 
 #Desolation Point
-
 scene=WhalingStationRegion
 item=GEAR_BoltCutters p=1002.8336,20.0256,1326.6067 r=0.0000,251.9457,0.0000 c=100
 item=GEAR_BoltCutters p=1035.3098,20.0270,1228.4561 r=358.9129,2.0972,355.5964 c=100
@@ -84,14 +77,13 @@ item=GEAR_BoltCutters p=-4.7888,0.3990,-10.2913 r=0.0000,340.3245,0.0000 c=100
 item=GEAR_BoltCutters p=0.9071,0.3990,-10.2307 r=359.2588,3.9272,-0.0000 c=100
 
 #Bleak Inlet
-
 scene=CanneryRegion
-item=GEAR_BoltCutters p=0.9071,0.3990,-10.2307 r=359.2588,3.9272,-0.0000 c=100 #Radio tower
+item=GEAR_BoltCutters p=0.9071,0.3990,-10.2307 r=359.2588,3.9272,-0.0000 c=100 
 item=GEAR_BoltCutters p=-102.7554,149.0173,-4.6980 r=15.1581,65.3679,0.6901 c=100
-item=GEAR_BoltCutters p=-455.9967,36.7620,-407.9248 r=324.6509,147.6343,6.4819 c=100 #Main fence gate
+item=GEAR_BoltCutters p=-455.9967,36.7620,-407.9248 r=324.6509,147.6343,6.4819 c=100 
 item=GEAR_BoltCutters p=-453.8412,35.4323,-407.2269 r=324.6509,130.4265,6.4819 c=100
-item=GEAR_BoltCutters p=-433.0450,36.0853,-410.7757 r=-0.0000,356.4512,299.9999 c=100 #Guard house
-item=GEAR_BoltCutters p=-366.9189,33.4956,-511.0976 r=0.0000,327.4076,90.0000 c=100 #Cannery workstation outdoors
+item=GEAR_BoltCutters p=-433.0450,36.0853,-410.7757 r=-0.0000,356.4512,299.9999 c=100 
+item=GEAR_BoltCutters p=-366.9189,33.4956,-511.0976 r=0.0000,327.4076,90.0000 c=100 
 item=GEAR_BoltCutters p=-367.8117,32.8483,-508.7313 r=-0.0000,338.9055,90.0000 c=100
 item=GEAR_BoltCutters p=-370.2881,33.4281,-508.1146 r=-0.0000,251.0178,90.0000 c=100	
 item=GEAR_BoltCutters p=-372.2289,32.8753,-509.0912 r=0.0000,326.7672,0.0000 c=100
@@ -106,16 +98,15 @@ item=GEAR_BoltCutters p=6.7746,0.6135,-24.8731 r=0.0000,276.9982,0.0000 c=100
 item=GEAR_BoltCutters p=10.9159,1.5160,3.4417 r=0.0000,358.9451,0.0000 c=100	
 
 #Blackrock
-
 scene=BlackrockRegion
-item=GEAR_BoltCutters p=-180.9773,227.2401,9.6284 r=21.3872,247.5009,85.4610 c=100 #Prison main gate chain
+item=GEAR_BoltCutters p=-180.9773,227.2401,9.6284 r=21.3872,247.5009,85.4610 c=100 
 item=GEAR_BoltCutters p=-180.6301,225.6857,9.4180 r=21.3874,92.0633,145.4611 c=100
-item=GEAR_BoltCutters p=-78.4436,225.8219,41.3319 r=-0.0000,39.4991,-0.0000 c=100 #Prison workshop outside
+item=GEAR_BoltCutters p=-78.4436,225.8219,41.3319 r=-0.0000,39.4991,-0.0000 c=100 
 item=GEAR_BoltCutters p=-83.9717,226.2937,37.5030 r=-0.0000,156.0012,-0.0000 c=100
 item=GEAR_BoltCutters p=-90.0616,225.9266,43.4281 r=-0.0000,20.7166,-0.0000 c=100
 item=GEAR_BoltCutters p=-252.2977,225.3083,113.7317 r=339.5779,291.5972,79.3731 c=100
-item=GEAR_BoltCutters p=465.8152,372.4062,948.4646 r=9.5709,353.7032,31.2224 c=100 #Last prospect
-item=GEAR_BoltCutters p=-585.0363,106.9509,-477.1174 r=0.0000,288.0778,0.0000 c=100 #Substation
+item=GEAR_BoltCutters p=465.8152,372.4062,948.4646 r=9.5709,353.7032,31.2224 c=100 
+item=GEAR_BoltCutters p=-585.0363,106.9509,-477.1174 r=0.0000,288.0778,0.0000 c=100 
 
 scene=RadioControlHutC
 item=GEAR_BoltCutters p=2.6039,0.4410,-0.7741 r=0.0000,355.0778,0.0000 c=100
@@ -123,19 +114,18 @@ item=GEAR_BoltCutters p=-0.2187,1.0299,1.0773 r=0.0000,269.8372,0.0000 c=100
 item=GEAR_BoltCutters p=2.3051,0.4100,-3.6568 r=0.0000,92.4092,75.0001 c=100
 
 #Airfield
-
 scene=AirfieldRegion
-item=GEAR_BoltCutters p=-1076.1466,234.5034,-1052.9387 r=-0.0000,4.9689,15.0000 c=100 #Junker's truck
+item=GEAR_BoltCutters p=-1076.1466,234.5034,-1052.9387 r=-0.0000,4.9689,15.0000 c=100 
 item=GEAR_BoltCutters p=-1055.3247,235.0590,-1063.7745 r=354.0540,126.8250,358.8064 c=100
 item=GEAR_BoltCutters p=-1059.3336,233.7021,-1071.2323 r=-0.0000,13.8900,255.0000 c=100
-item=GEAR_BoltCutters p=100.8650,161.9350,-564.8859 r=0.0000,307.9131,0.0000 c=100 #Small hangar
+item=GEAR_BoltCutters p=100.8650,161.9350,-564.8859 r=0.0000,307.9131,0.0000 c=100 
 item=GEAR_BoltCutters p=111.4807,160.4026,-577.8713 r=0.0000,336.5706,0.0000 c=100
 item=GEAR_BoltCutters p=100.4673,160.6669,-562.4236 r=0.0000,280.6262,0.0000 c=100
-item=GEAR_BoltCutters p=84.5760,162.1371,-448.3198 r=-0.0000,178.5288,-0.0000 c=100 #Control tower storage room
-item=GEAR_BoltCutters p=85.3668,160.7397,-442.7469 r=-0.0000,14.6197,74.9999 c=100 #Transmitter
+item=GEAR_BoltCutters p=84.5760,162.1371,-448.3198 r=-0.0000,178.5288,-0.0000 c=100 
+item=GEAR_BoltCutters p=85.3668,160.7397,-442.7469 r=-0.0000,14.6197,74.9999 c=100 
 
 scene=AFHangar
-item=GEAR_BoltCutters p=15.0215,-7.0409,2.5923 r=-0.0000,174.5588,-0.0000 c=100 #Basement
+item=GEAR_BoltCutters p=15.0215,-7.0409,2.5923 r=-0.0000,174.5588,-0.0000 c=100
 item=GEAR_BoltCutters p=20.5813,-7.0309,4.9250 r=-0.0000,10.4369,-0.0000 c=100
 
 

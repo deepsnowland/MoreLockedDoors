@@ -113,9 +113,77 @@ namespace MoreLockedDoors.Utils
                         Tag = tag
                     };
 
+                    if (noSceneCheck)
+                    {
+                        listToReturn.Add(info);
+                    }
+                    else
+                    {
+                        if (scene == sceneName)
+                        {
+                            listToReturn.Add(info);
+                        }
+                    }
+
+
+                    continue;
+                }
+            }
+
+            return listToReturn;
+        }
+
+        public static List<GearSpawnInfo> GetListOfGearSpawnInfos(ref List<string> sceneList, string[] lines, string sceneName, bool noSceneCheck = false)
+        {
+
+            string? scene = null;
+            string tag = "none";
+
+            List<GearSpawnInfo> listToReturn = new List<GearSpawnInfo>();
+
+            foreach (string eachLine in lines)
+            {
+                string trimmedLine = eachLine.Trim();
+                if (trimmedLine.Length == 0 || trimmedLine.StartsWith("#"))
+                {
+                    continue;
+                }
+
+                var match = SCENE_REGEX.Match(trimmedLine);
+                if (match.Success)
+                {
+                    scene = match.Groups[1].Value;
+                    continue;
+                }
+
+                match = TAG_REGEX.Match(trimmedLine);
+                if (match.Success)
+                {
+                    tag = match.Groups[1].Value;
+                    continue;
+                }
+
+                match = SPAWN_REGEX.Match(trimmedLine);
+                if (match.Success)
+                {
+                    if (string.IsNullOrEmpty(scene))
+                    {
+                        MelonLogger.Error($"No scene name defined before line '{eachLine}'. Did you forget a 'scene = <SceneName>'?");
+                    }
+
+                    GearSpawnInfo info = new GearSpawnInfo
+                    {
+                        PrefabName = match.Groups[1].Value,
+                        SpawnChance = ParseFloat(match.Groups[4].Value, 100, eachLine),
+                        Position = ParseVector(match.Groups[2].Value, eachLine),
+                        Rotation = Quaternion.Euler(ParseVector(match.Groups[3].Value, eachLine)),
+                        Tag = tag
+                    };
+
                         if (noSceneCheck)
                         {
                             listToReturn.Add(info);
+                            sceneList.Add(scene);
                         }
                         else
                         {

@@ -60,6 +60,7 @@ namespace MoreLockedDoors.Utils
         {
             if (data != null)
             {
+                MelonLogger.Msg("Saving list");
                 string dataToSave = JsonSerializer.Serialize<List<SpawnSaveDataProxy>>(data);
                 dm.Save(dataToSave, "boltcutters");
             }

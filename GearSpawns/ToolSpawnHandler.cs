@@ -20,11 +20,17 @@ namespace MoreLockedDoors.GearSpawns
             if (gearSpawnInfo.PrefabName.ToLowerInvariant().Contains("boltcutters"))
             {
                 //this should only be called once 
-                ItemSpawnManager.ChooseSpawnLocationsForBoltcutters();
-
-                string scene = GameManager.m_ActiveScene;
 
                 SaveDataManager sdm = Implementation.sdm;
+
+                if (sdm.LoadBoltcuttersList() == null)
+                {
+                    ItemSpawnManager.ChooseSpawnLocationsForBoltcutters();
+                }
+                
+               
+
+                string scene = GameManager.m_ActiveScene;
 
                 List<SpawnSaveDataProxy> list = sdm.LoadBoltcuttersList();
 

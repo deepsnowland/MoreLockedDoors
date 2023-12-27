@@ -20,7 +20,6 @@ namespace MoreLockedDoors.GearSpawns
         {
             SpawnTagManager.AddHandler("morelockeddoors_randomkeys", new KeySpawnHandler());
             SpawnTagManager.AddHandler("morelockeddoors_boltcutters", new ToolSpawnHandler());
-
         }
 
         public static void ChooseSpawnLocationForKey(string keyName)
@@ -108,8 +107,6 @@ namespace MoreLockedDoors.GearSpawns
             List<GearSpawnInfo> list = GearSpawnerOverrides.GetListOfGearSpawnInfos(rawLines, sceneName);
             int spawnChoice = random.Next(0, list.Count - 1);
 
-            MelonLogger.Msg("Chosen scene: {0}", sceneName);
-
             GearSpawnInfo chosen = list[spawnChoice];
             Vector3Ser pos = new Vector3Ser(chosen.Position);
             QuaternionSer rot = new QuaternionSer(chosen.Rotation);
@@ -121,17 +118,8 @@ namespace MoreLockedDoors.GearSpawns
 
         public static void ChooseSpawnLocationsForBoltcutters()
         {
-            SaveDataManager sdm = Implementation.sdm;
 
-            if (sdm.LoadKeyData("boltcutters") != null)
-            {
-                MelonLogger.Msg("List of boltcutters spawns already determined.");
-                return;
-            }
-            else
-            {
-                MelonLogger.Msg("List of boltcutters spawns not yet determined.");
-            }
+            SaveDataManager sdm = Implementation.sdm;
 
             Random random = new Random();
             string sceneName = "";
@@ -139,21 +127,28 @@ namespace MoreLockedDoors.GearSpawns
             string rawSpawnTextData = GearSpawnerOverrides.ReadRawDataFromGearSpawnFile("tools");
             string[] rawLines = GearSpawnerOverrides.ParseInformationToLines(rawSpawnTextData);
 
-            List<GearSpawnInfo> list = GearSpawnerOverrides.GetListOfGearSpawnInfos(rawLines, sceneName, true);
+            List<string> scenesList = new List<string>();
+            List<GearSpawnInfo> list = GearSpawnerOverrides.GetListOfGearSpawnInfos(ref scenesList, rawLines, sceneName, true);
             List<SpawnSaveDataProxy> listToSave = new List<SpawnSaveDataProxy>();
 
-            foreach (GearSpawnInfo gsi in list)
+            for(int i = 0; i < list.Count; i++)
             {
+                GearSpawnInfo gsi = list[i];
+
                 Vector3Ser pos = new Vector3Ser(gsi.Position);
                 QuaternionSer rot = new QuaternionSer(gsi.Rotation);
                 CustomGearSpawnInfo cgsi = new CustomGearSpawnInfo(gsi.Tag, pos, gsi.PrefabName, rot, gsi.SpawnChance);
-                SpawnSaveDataProxy sdp = new SpawnSaveDataProxy(sceneName, cgsi);
+                SpawnSaveDataProxy sdp = new SpawnSaveDataProxy(scenesList[i], cgsi);
                 listToSave.Add(sdp);
             }
 
-            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            foreach (GearSpawnInfo gsi in list)
+            {
+               
+            }
 
-            int count = random.Next(listToSave.Count / 2, listToSave.Count);
+            int count = random.Next(listToSave.Count / 4, listToSave.Count);
+
 
             RandomlyRemoveElements(listToSave, count);
             listToSave = RemoveMultipleSpawnsPerScene(listToSave, e => e.sceneName);
