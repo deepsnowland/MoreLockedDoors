@@ -5,22 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
+using Il2Cpp;
+using ModComponent;
 
 namespace MoreLockedDoors.Utils
 {
     internal class Items
     {
 
-        public static GameObject prybar = Addressables.LoadAssetAsync<GameObject>("GEAR_Prybar").WaitForCompletion();
-        public static GameObject boltcutters = Addressables.LoadAssetAsync<GameObject>("GEAR_Boltcutters").WaitForCompletion();
-        public static GameObject hacksaw = Addressables.LoadAssetAsync<GameObject>("GEAR_Hacksaw").WaitForCompletion();
+        public static string prybar = "GEAR_Prybar";
+        public static string boltcutters = "GEAR_BoltCutters";
+        public static string hacksaw = "GEAR_Hacksaw";
+        public static string hatchet = "GEAR_Hatchet";
 
         //Custom items
-        public static GameObject farmKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_FarmKey").WaitForCompletion();
-        public static GameObject communityHallKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_PV_CommunityHallKey").WaitForCompletion();
-        public static GameObject campOfficeKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_ML_CampOfficeKey").WaitForCompletion();
-        public static GameObject anglersDenKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_AC_AnglersDenKey").WaitForCompletion();
-        public static GameObject fishingCabinKey = Addressables.LoadAssetAsync<GameObject>("GEAR_MoreLockedDoors_CH_FishingCabinKey").WaitForCompletion();
+        public static string farmKey = "GEAR_MoreLockedDoors_PV_FarmKey";
+        public static string communityHallKey = "GEAR_MoreLockedDoors_PV_CommunityHallKey";
+        public static string campOfficeKey = "GEAR_MoreLockedDoors_ML_CampOfficeKey";
+        public static string anglersDenKey = "GEAR_MoreLockedDoors_AC_AnglersDenKey";
+        public static string fishingCabinKey = "GEAR_MoreLockedDoors_CH_FishingCabinKey";
+
+        //unsued
+        public static GearItem GetGearItem(string prefabName)
+        {
+            GameObject prefab = Addressables.LoadAssetAsync<GameObject>(prefabName).WaitForCompletion();
+            return prefab.GetComponent<GearItem>();
+        }
 
     }
 }
