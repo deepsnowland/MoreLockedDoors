@@ -10,6 +10,7 @@ using Il2Cpp;
 using MoreLockedDoors.Locks;
 using Unity.VisualScripting;
 using MoreLockedDoors.Utils;
+using Il2CppTLD.IntBackedUnit;
 
 namespace MoreLockedDoors.Patches
 {
@@ -67,7 +68,7 @@ namespace MoreLockedDoors.Patches
             public static void Prefix(ref string hoverText, ref GameObject itemUnderCrosshairs, ref HoverTextState textState, Panel_HUD __instance)
             {
 
-                if (GameManager.m_ActiveScene.ToLowerInvariant().Contains("menu") || GameManager.m_ActiveScene.ToLowerInvariant().Contains("boot")) return;
+                if (GameManager.IsMainMenuActive()) return;
                 if (hoverText == null || itemUnderCrosshairs == null) return;
 
                 CustomLock cl = itemUnderCrosshairs.GetComponent<CustomLock>();
@@ -94,7 +95,7 @@ namespace MoreLockedDoors.Patches
                 if (__instance.DisplayName.ToLowerInvariant().Contains("bolt"))
                 {
                     Destroy(__instance.GetComponent<NarrativeCollectibleItem>());
-                    __instance.m_GearItemData.m_BaseWeightKG = 1.5f;
+                    __instance.m_GearItemData.m_BaseWeight = new ItemWeight(1500000000);
                 }
 
 

@@ -17,6 +17,7 @@ namespace MoreLockedDoors.Locks
     internal class CustomLock : MonoBehaviour
     {
         private ObjectGuid m_GUID;
+        private bool Loaded;
 
         private LockState m_LockState;
 
@@ -53,6 +54,7 @@ namespace MoreLockedDoors.Locks
         public void Awake()
         {
             m_GUID = base.GetComponent<ObjectGuid>();
+            Loaded = false;
             LoadData();
             m_AttemptedToOpen = false;
             MaybeGetHoverIcons();
@@ -69,7 +71,7 @@ namespace MoreLockedDoors.Locks
                 return;
             }
 
-            if (!this.m_CheckedForPair)
+            if (!this.m_CheckedForPair && Loaded)
             {
                 this.MaybeUnlockDueToPairBeingUnlocked();
                 this.m_CheckedForPair = true;
@@ -111,13 +113,22 @@ namespace MoreLockedDoors.Locks
         {
             SaveDataManager sdm = Implementation.sdm;
 
-            CustomLockSaveDataProxy sdp = sdm.LoadLockData(m_GUID.PDID);
+            try
+            {
+                CustomLockSaveDataProxy sdp = sdm.LoadLockData(m_GUID.PDID, true);
 
-            m_LockState = sdp.m_LockState;
-            m_IsBrokenOpen = sdp.m_IsBrokenOpen;
-            m_ItemsUsedToForceLock = sdp.m_ItemsUsedToForceLock;
-            m_LockedAudio = sdp.m_LockedAudio;
-            m_Pair = sdp.m_Pair;
+                m_LockState = sdp.m_LockState;
+                m_IsBrokenOpen = sdp.m_IsBrokenOpen;
+                m_ItemsUsedToForceLock = sdp.m_ItemsUsedToForceLock;
+                m_LockedAudio = sdp.m_LockedAudio;
+                m_Pair = sdp.m_Pair;
+
+                Loaded = true;
+            }
+            catch (Exception e)
+            {
+                MelonLogger.Error("Unable to load lock data from mod data file and/or cache.");
+            }
 
             //there will always be data!
             MaybeGetHoverIcons();
@@ -131,6 +142,7 @@ namespace MoreLockedDoors.Locks
             CustomLockSaveDataProxy sdp = new CustomLockSaveDataProxy(m_LockState, m_IsBrokenOpen, m_ItemsUsedToForceLock, m_LockedAudio, m_Pair);
 
             string dataToSave = JsonSerializer.Serialize(sdp);
+
             sdm.Save(dataToSave, m_GUID.PDID);
         }
 

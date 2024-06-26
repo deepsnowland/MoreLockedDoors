@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine;
 using Il2Cpp;
 using ModComponent;
+using MelonLoader;
 
 namespace MoreLockedDoors.Utils
 {
@@ -28,6 +29,7 @@ namespace MoreLockedDoors.Utils
         //unsued
         public static GearItem GetGearItem(string prefabName)
         {
+
             GameObject prefab = Addressables.LoadAssetAsync<GameObject>(prefabName).WaitForCompletion();
             return prefab.GetComponent<GearItem>();
         }
