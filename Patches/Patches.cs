@@ -13,6 +13,7 @@ using MoreLockedDoors.Locks;
 using LoadScene = Il2Cpp.LoadScene;
 using MoreLockedDoors.Utils;
 using Il2CppNodeCanvas.Tasks.Actions;
+using Il2CppTLD.IntBackedUnit;
 
 namespace MoreLockedDoors.Patches
 {
@@ -32,7 +33,7 @@ namespace MoreLockedDoors.Patches
         }
 
 
-    
+
         public static void AddForceItemLockComponents()
         {
 
@@ -88,34 +89,94 @@ namespace MoreLockedDoors.Patches
 
         }
 
-        //These patches fix issues with the generic Lock component
-        [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.Update))]
 
-        internal class LoadScene_Update
+
+        [HarmonyPatch(typeof(LoadScene), nameof(LoadScene.PerformHold))]
+
+        public class ForceLockOnSceneLoadTrigger
         {
-            /* private static void Postfix(LoadScene __instance)
-             {
-                 Lock lck = null;
 
-                 GameObject obj = __instance.gameObject;
-                 string[] paths = Utils.Paths.paths;
+            public static bool Prefix(LoadScene __instance)
+            {
 
-                 if (paths.Any(Utils.Paths.GetObjectPath(obj).Contains))
-                 {
-                     //MelonLogger.Msg("Found mod lock object: {0}", Paths.GetObjectPath(obj));
-                     lck = obj.GetComponent<Lock>();
-                     lck.MaybeUnlockDueToCompanionBeingUnlocked();
+                if (__instance.gameObject.GetComponent<CustomLock>())
+                {
+                    if (__instance.gameObject.GetComponent<CustomLock>().IsLocked())
+                    {
+                        __instance.gameObject.GetComponent<CustomLock>().UnlockBegin();
+                        return false;
+                    }
+                    else return true;
+                }
+                else return true;
+            }
 
-                     if (lck.m_LockState == LockState.Unlocked) lck.UnlockCompanionLock(); 
-                 }
-                 else
-                 {
-                     return;
-                 }
+        }
 
-             } */
+        [HarmonyPatch(typeof(OpenClose), nameof(OpenClose.PerformHold))]
+
+        public class ForceLockOnHinge
+        {
+            public static bool Prefix(OpenClose __instance)
+            {
+
+                if (__instance.gameObject.GetComponent<CustomLock>())
+                {
+                    if (__instance.gameObject.GetComponent<CustomLock>().IsLocked())
+                    {
+                        __instance.gameObject.GetComponent<CustomLock>().UnlockBegin();
+                        return false;
+                    }
+                    else return true;
+                }
+                else return true;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(Panel_HUD), nameof(Panel_HUD.SetHoverText))]
+
+        public class AddLockedHoverText
+        {
+
+            public static void Prefix(ref string hoverText, ref GameObject itemUnderCrosshairs, ref HoverTextState textState, Panel_HUD __instance)
+            {
+
+                if (GameManager.IsMainMenuActive()) return;
+                if (hoverText == null || itemUnderCrosshairs == null) return;
+
+                CustomLock cl = itemUnderCrosshairs.GetComponent<CustomLock>();
+                if (cl != null)
+                {
+                    if (cl.IsLocked())
+                    {
+                        __instance.m_Label_SubText.color = Color.red;
+                        hoverText += "\n Locked";
+                    }
+                }
+
+            }
+
+        }
+
+        [HarmonyPatch(typeof(GearItem), nameof(GearItem.Awake))]
+
+        public class RemoveCollectibleFromBoltcutters : MonoBehaviour
+        {
+
+            public static void Postfix(GearItem __instance)
+            {
+                if (__instance.DisplayName.ToLowerInvariant().Contains("bolt"))
+                {
+                    Destroy(__instance.GetComponent<NarrativeCollectibleItem>());
+                    __instance.m_GearItemData.m_BaseWeight = new ItemWeight(1500000000);
+                }
+
+
+            }
         }
     }
 }
+
 
 
