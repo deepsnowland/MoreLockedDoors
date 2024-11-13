@@ -16,17 +16,22 @@ namespace MoreLockedDoors.Utils
     internal class SaveDataManager
     {
 
-        ModDataManager dm = new ModDataManager("More Locked Doors", false);
+        ModDataManager dm = new ModDataManager("More Locked Doors", true);
         public void Save(string data, string suffix)
         {
+            if(suffix != null || suffix != "") MelonLogger.Msg("Saving data using suffix: {0}", suffix);
             dm.Save(data, suffix);
         }
 
-        public CustomLockSaveDataProxy LoadLockData(string suffix)
+        public CustomLockSaveDataProxy LoadLockData(string suffix, bool displayDebug = false)
         {
             string? data = dm.Load(suffix);
 
-            if (data is null) return null;
+            if (data is null)
+            {
+                if(displayDebug) MelonLogger.Error("Unable to load data from mod data using suffix {0}", suffix);
+                return null;
+            }
             
             CustomLockSaveDataProxy sdp = JsonSerializer.Deserialize<CustomLockSaveDataProxy>(data);
 

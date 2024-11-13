@@ -40,6 +40,7 @@ namespace MoreLockedDoors.GearSpawns
 
                         if (ItemSpawnManager.AreGearSpawnInfosEqual(gsi, gearSpawnInfo))
                         {
+                            MelonLogger.Msg("Spawning key!");
                             return true;
                         }
                         else
